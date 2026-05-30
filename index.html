@@ -4,18 +4,18 @@
 <meta charset="UTF-8">
   <meta name="color-scheme" content="light">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>썸머 써 바이블 완서자 등록</title>
+<title>[고척교회] 썸머 써 바이블 완서자 등록</title>
 <meta name="description" content="고척교회 썸머 써 바이블 완서자 등록/조회 페이지입니다.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="고척교회">
-<meta property="og:title" content="썸머 써 바이블 완서자 등록">
+<meta property="og:title" content="[고척교회] 썸머 써 바이블 완서자 등록">
 <meta property="og:description" content="고척교회 썸머 써 바이블 완서자 등록/조회 페이지입니다.">
 <meta property="og:image" content="https://sewoongkim1.github.io/summer-bible/og-image.png">
 <meta property="og:image:width" content="1254">
 <meta property="og:image:height" content="1254">
 <meta property="og:url" content="https://sewoongkim1.github.io/summer-bible/">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="썸머 써 바이블 완서자 등록">
+<meta name="twitter:title" content="[고척교회] 썸머 써 바이블 완서자 등록">
 <meta name="twitter:description" content="고척교회 썸머 써 바이블 완서자 등록/조회 페이지입니다.">
 <meta name="twitter:image" content="https://sewoongkim1.github.io/summer-bible/og-image.png">
 <link rel="icon" type="image/png" href="https://sewoongkim1.github.io/summer-bible/og-image.png">
@@ -75,13 +75,42 @@ select:focus,input:focus{outline:none;border-color:#3367d6;background:#fff}
 <label>구분</label>
 <select id="type" onchange="onTypeChange()"><option value="">선택</option><option value="교구">교구</option><option value="교회학교">교회학교</option></select>
 <div id="kyogu-fields" class="hidden">
-<label>교구</label><select id="district"><option value="">선택</option><option>믿음</option><option>소망</option><option>사랑</option><option>섬김</option><option>은혜</option><option>화평</option><option>기쁨</option><option>새가족</option></select>
+<label>교구</label>
+<div class="radio-btn-wrap">
+  <input type="radio" name="district" id="d_1" value="믿음"><label for="d_1">믿음</label>
+  <input type="radio" name="district" id="d_2" value="소망"><label for="d_2">소망</label>
+  <input type="radio" name="district" id="d_3" value="사랑"><label for="d_3">사랑</label>
+  <input type="radio" name="district" id="d_4" value="섬김"><label for="d_4">섬김</label>
+  <input type="radio" name="district" id="d_5" value="은혜"><label for="d_5">은혜</label>
+  <input type="radio" name="district" id="d_6" value="화평"><label for="d_6">화평</label>
+  <input type="radio" name="district" id="d_7" value="기쁨"><label for="d_7">기쁨</label>
+  <input type="radio" name="district" id="d_8" value="새가족"><label for="d_8">새가족</label>
+</div>
 <label>목장(숫자)</label><input type="text" id="cell" placeholder="예: 1 또는 3">
-<label>직분</label><select id="position"><option value="">선택 (선택사항)</option><option>장로님</option><option>집사님</option><option>안수집사님 (시무/은퇴)</option><option>권사님 (시무/명예/은퇴)</option><option>장로님 (시무/명예/은퇴)</option><option>목사님 (사모님)</option></select>
+<label>직분 <span style="font-weight:400;color:#aaa;font-size:12px">(선택사항)</span></label>
+<div class="radio-btn-wrap">
+  <input type="radio" name="position" id="p_1" value="장로님"><label for="p_1">장로님</label>
+  <input type="radio" name="position" id="p_2" value="집사님"><label for="p_2">집사님</label>
+  <input type="radio" name="position" id="p_3" value="안수집사님 (시무/은퇴)"><label for="p_3">안수집사님</label>
+  <input type="radio" name="position" id="p_4" value="권사님 (시무/명예/은퇴)"><label for="p_4">권사님</label>
+  <input type="radio" name="position" id="p_5" value="장로님 (시무/명예/은퇴)"><label for="p_5">장로님(은퇴)</label>
+  <input type="radio" name="position" id="p_6" value="목사님 (사모님)"><label for="p_6">목사님/사모님</label>
+</div>
 <label>성명</label><input type="text" id="name_k" placeholder="성명을 입력하세요">
 </div>
 <div id="school-fields" class="hidden">
-<label>부서</label><select id="department"><option value="">선택</option><option>사랑부</option><option>영아부</option><option>유아부</option><option>유치부</option><option>유년부</option><option>초등부</option><option>중등부</option><option>고등부</option><option>청년부</option></select>
+<label>부서</label>
+<div class="radio-btn-wrap">
+  <input type="radio" name="department" id="dep_1" value="사랑부"><label for="dep_1">사랑부</label>
+  <input type="radio" name="department" id="dep_2" value="영아부"><label for="dep_2">영아부</label>
+  <input type="radio" name="department" id="dep_3" value="유아부"><label for="dep_3">유아부</label>
+  <input type="radio" name="department" id="dep_4" value="유치부"><label for="dep_4">유치부</label>
+  <input type="radio" name="department" id="dep_5" value="유년부"><label for="dep_5">유년부</label>
+  <input type="radio" name="department" id="dep_6" value="초등부"><label for="dep_6">초등부</label>
+  <input type="radio" name="department" id="dep_7" value="중등부"><label for="dep_7">중등부</label>
+  <input type="radio" name="department" id="dep_8" value="고등부"><label for="dep_8">고등부</label>
+  <input type="radio" name="department" id="dep_9" value="청년부"><label for="dep_9">청년부</label>
+</div>
 <label>학년</label><input type="text" id="grade" placeholder="예: 1 또는 3학년">
 <label>성명</label><input type="text" id="name_s" placeholder="성명을 입력하세요">
 </div>
@@ -148,9 +177,9 @@ function clearRegisterForm(){
   document.getElementById('type').value='';
   document.getElementById('kyogu-fields').classList.add('hidden');
   document.getElementById('school-fields').classList.add('hidden');
-  ['district','cell','name_k','grade','name_s'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
-  document.getElementById('position').value='';
-  document.getElementById('department').value='';
+  ['cell','name_k','grade','name_s'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});document.querySelectorAll('input[name="district"]').forEach(r=>r.checked=false);
+  document.querySelectorAll('input[name="position"]').forEach(r=>r.checked=false);
+  document.querySelectorAll('input[name="department"]').forEach(r=>r.checked=false);
   hideErr();
 }
 function clearAndGoRegister(){
@@ -183,15 +212,15 @@ function goConfirm(){
   if(!type){showErr('구분을 선택해 주세요.');return;}
   let params={type};
   if(type==='교구'){
-    params.district=document.getElementById('district').value;
+    const _d=document.querySelector('input[name="district"]:checked');params.district=_d?_d.value:'';
     params.cell=document.getElementById('cell').value.trim();
-    params.position=document.getElementById('position').value;
+    const _p=document.querySelector('input[name="position"]:checked');params.position=_p?_p.value:'';
     params.name=document.getElementById('name_k').value.trim();
     if(!params.district){showErr('교구를 선택해 주세요.');return;}
     if(!params.cell){showErr('목장을 입력해 주세요.');return;}
     if(!params.name){showErr('성명을 입력해 주세요.');return;}
   }else{
-    params.department=document.getElementById('department').value;
+    const _dep=document.querySelector('input[name="department"]:checked');params.department=_dep?_dep.value:'';
     params.grade=document.getElementById('grade').value.trim();
     params.name=document.getElementById('name_s').value.trim();
     if(!params.department){showErr('부서를 선택해 주세요.');return;}
