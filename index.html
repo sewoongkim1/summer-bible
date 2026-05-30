@@ -211,7 +211,7 @@ else{
 const r=data.rows[0];
 const icon=r.status==='중복'?'⚠️':'✅';
 const info=type==='교구'?'구분: '+r.type+' | 교구: '+r.group+' | 목장: '+r.sub+' | 성명: '+r.name:'구분: '+r.type+' | 부서: '+r.group+' | 학년: '+r.sub+' | 성명: '+r.name;
-box.innerHTML='<div class="result-found"><div class="result-title">'+icon+' 등록 확인 ('+data.count+'건)</div><div class="result-info">'+info+'</div>'+(r.note?'<div class="result-info" style="margin-top:4px;color:#9a3412">비고: '+r.note+'</div>':'')+'</div>';
+box.innerHTML='<br><div class="result-found"><div class="result-title">'+icon+' 등록 확인 ('+data.count+'건)</div><div class="result-info">'+info+'</div>'+(r.note?'<div class="result-info" style="margin-top:4px;color:#9a3412">비고: '+r.note+'</div>':'')+'</div>';
 }
 document.getElementById('backToRegisterBtn').classList.remove('hidden');
 }catch(e){errBox.textContent='네트워크 오류가 발생했습니다.';errBox.classList.remove('hidden');}
