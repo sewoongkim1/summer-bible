@@ -55,6 +55,11 @@ select:focus,input:focus{outline:none;border-color:#3367d6;background:#fff}
 .result-notfound{background:#f9fafb;border:1.5px solid #d1d5db;border-radius:8px;padding:16px;color:#6b7280;margin-bottom:12px}
 .result-title{font-weight:700;font-size:15px;margin-bottom:8px}
 .result-info{font-size:13px;margin-top:4px}
+.radio-btn-wrap{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+.radio-btn-wrap input[type=radio]{display:none}
+.radio-btn-wrap label{display:inline-block;padding:8px 14px;border:1.5px solid #ddd;border-radius:8px;font-size:13px;font-weight:600;color:#555;background:#fafafa;cursor:pointer;transition:all .2s;margin:0}
+.radio-btn-wrap input[type=radio]:checked+label{border-color:#3367d6;color:#3367d6;background:#f0f4ff}
+.radio-btn-wrap label:hover{border-color:#3367d6;color:#3367d6}
 </style>
 </head>
 <body>
@@ -100,12 +105,33 @@ select:focus,input:focus{outline:none;border-color:#3367d6;background:#fff}
 <label>구분</label>
 <select id="l_type" onchange="onLookupTypeChange()"><option value="">선택</option><option value="교구">교구</option><option value="교회학교">교회학교</option></select>
 <div id="l_kyogu" class="hidden">
-<label>교구</label><select id="l_district"><option value="">선택</option><option>믿음</option><option>소망</option><option>사랑</option><option>섬김</option><option>은혜</option><option>화평</option><option>기쁨</option><option>새가족</option></select>
+<label>교구</label>
+<div class="radio-btn-wrap">
+  <input type="radio" name="l_district" id="ld_1" value="믿음"><label for="ld_1">믿음</label>
+  <input type="radio" name="l_district" id="ld_2" value="소망"><label for="ld_2">소망</label>
+  <input type="radio" name="l_district" id="ld_3" value="사랑"><label for="ld_3">사랑</label>
+  <input type="radio" name="l_district" id="ld_4" value="섬김"><label for="ld_4">섬김</label>
+  <input type="radio" name="l_district" id="ld_5" value="은혜"><label for="ld_5">은혜</label>
+  <input type="radio" name="l_district" id="ld_6" value="화평"><label for="ld_6">화평</label>
+  <input type="radio" name="l_district" id="ld_7" value="기쁨"><label for="ld_7">기쁨</label>
+  <input type="radio" name="l_district" id="ld_8" value="새가족"><label for="ld_8">새가족</label>
+</div>
 <label>목장(숫자)</label><input type="text" id="l_cell" placeholder="예: 1 또는 3">
 <label>성명</label><input type="text" id="l_name_k" placeholder="성명을 입력하세요">
 </div>
 <div id="l_school" class="hidden">
-<label>부서</label><select id="l_department"><option value="">선택</option><option>사랑부</option><option>영아부</option><option>유아부</option><option>유치부</option><option>유년부</option><option>초등부</option><option>중등부</option><option>고등부</option><option>청년부</option></select>
+<label>부서</label>
+<div class="radio-btn-wrap">
+  <input type="radio" name="l_department" id="ls_1" value="사랑부"><label for="ls_1">사랑부</label>
+  <input type="radio" name="l_department" id="ls_2" value="영아부"><label for="ls_2">영아부</label>
+  <input type="radio" name="l_department" id="ls_3" value="유아부"><label for="ls_3">유아부</label>
+  <input type="radio" name="l_department" id="ls_4" value="유치부"><label for="ls_4">유치부</label>
+  <input type="radio" name="l_department" id="ls_5" value="유년부"><label for="ls_5">유년부</label>
+  <input type="radio" name="l_department" id="ls_6" value="초등부"><label for="ls_6">초등부</label>
+  <input type="radio" name="l_department" id="ls_7" value="중등부"><label for="ls_7">중등부</label>
+  <input type="radio" name="l_department" id="ls_8" value="고등부"><label for="ls_8">고등부</label>
+  <input type="radio" name="l_department" id="ls_9" value="청년부"><label for="ls_9">청년부</label>
+</div>
 <label>학년</label><input type="text" id="l_grade" placeholder="예: 1 또는 3학년">
 <label>성명</label><input type="text" id="l_name_s" placeholder="성명을 입력하세요">
 </div>
@@ -201,8 +227,8 @@ function prefillLookup(){
   if(!lastParams)return;
   const type=lastParams.type;
   document.getElementById('l_type').value=type;onLookupTypeChange();
-  if(type==='교구'){document.getElementById('l_district').value=lastParams.district||'';document.getElementById('l_cell').value=lastParams.cell||'';document.getElementById('l_name_k').value=lastParams.name||'';}
-  else{document.getElementById('l_department').value=lastParams.department||'';document.getElementById('l_grade').value=lastParams.grade||'';document.getElementById('l_name_s').value=lastParams.name||'';}
+  if(type==='교구'){if(lastParams.district){const _el=document.querySelector('input[name="l_district"][value="'+lastParams.district+'"]');if(_el)_el.checked=true;}document.getElementById('l_cell').value=lastParams.cell||'';document.getElementById('l_name_k').value=lastParams.name||'';}
+  else{if(lastParams.department){const _el2=document.querySelector('input[name="l_department"][value="'+lastParams.department+'"]');if(_el2)_el2.checked=true;}document.getElementById('l_grade').value=lastParams.grade||'';document.getElementById('l_name_s').value=lastParams.name||'';}
 }
 async function doLookup(){
   const errBox=document.getElementById('l_errBox');
@@ -210,8 +236,8 @@ async function doLookup(){
   const type=document.getElementById('l_type').value;
   if(!type){errBox.textContent='구분을 선택해 주세요.';errBox.classList.remove('hidden');return;}
   let qp={action:'lookup',type};
-  if(type==='교구'){qp.group=document.getElementById('l_district').value;qp.sub=document.getElementById('l_cell').value.trim();qp.name=document.getElementById('l_name_k').value.trim();}
-  else{qp.group=document.getElementById('l_department').value;qp.sub=document.getElementById('l_grade').value.trim();qp.name=document.getElementById('l_name_s').value.trim();}
+  if(type==='교구'){const _ld=document.querySelector('input[name="l_district"]:checked');qp.group=_ld?_ld.value:'';qp.sub=document.getElementById('l_cell').value.trim();qp.name=document.getElementById('l_name_k').value.trim();}
+  else{const _ldep=document.querySelector('input[name="l_department"]:checked');qp.group=_ldep?_ldep.value:'';qp.sub=document.getElementById('l_grade').value.trim();qp.name=document.getElementById('l_name_s').value.trim();}
   const btn=document.getElementById('lookupBtn');
   btn.innerHTML='<span class="spinner"></span>조회 중...';btn.disabled=true;
   try{
