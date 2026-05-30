@@ -3,19 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>썸머 써 바이블 완서자 등록</title>
-<meta name="description" content="썸머 써 바이블 완서자 등록/조회 페이지입니다.">
+<title>[고척교회] 썸머 써 바이블 완서자 등록</title>
+<meta name="description" content="고척교회 썸머 써 바이블 완서자 등록/조회 페이지입니다.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="고척교회">
-<meta property="og:title" content="썸머 써 바이블 완서자 등록">
-<meta property="og:description" content="썸머 써 바이블 완서자 등록/조회 페이지입니다.">
+<meta property="og:title" content="[고척교회] 썸머 써 바이블 완서자 등록">
+<meta property="og:description" content="고척교회 썸머 써 바이블 완서자 등록/조회 페이지입니다.">
 <meta property="og:image" content="https://sewoongkim1.github.io/summer-bible/og-image.png">
 <meta property="og:image:width" content="1254">
 <meta property="og:image:height" content="1254">
 <meta property="og:url" content="https://sewoongkim1.github.io/summer-bible/">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="썸머 써 바이블 완서자 등록">
-<meta name="twitter:description" content="썸머 써 바이블 완서자 등록/조회 페이지입니다.">
+<meta name="twitter:title" content="[고척교회] 썸머 써 바이블 완서자 등록">
+<meta name="twitter:description" content="고척교회 썸머 써 바이블 완서자 등록/조회 페이지입니다.">
 <meta name="twitter:image" content="https://sewoongkim1.github.io/summer-bible/og-image.png">
 <link rel="icon" type="image/png" href="https://sewoongkim1.github.io/summer-bible/og-image.png">
 <link rel="apple-touch-icon" href="https://sewoongkim1.github.io/summer-bible/og-image.png">
@@ -91,7 +91,7 @@ select:focus,input:focus{outline:none;border-color:#3367d6;background:#fff}
 </div>
 <div id="doneForm" class="hidden">
 <div id="doneResult"></div>
-<button class="btn" onclick="goNewRegister()">➕ 새로 등록하기</button>
+<button class="btn" onclick="clearAndGoRegister()">➕ 새로 등록하기</button>
 <button class="btn secondary" onclick="switchMode('lookup');prefillLookup()">🔍 내 등록 조회하기</button>
 </div>
 <div id="lookupForm" class="hidden">
@@ -111,17 +111,39 @@ select:focus,input:focus{outline:none;border-color:#3367d6;background:#fff}
 <div id="l_errBox" class="hidden" style="background:#fff0f0;border:1.5px solid #f5c2c7;border-radius:8px;padding:10px 14px;margin-top:12px;color:#c0392b;font-size:13px"></div>
 <button class="btn" id="lookupBtn" onclick="doLookup()">조회하기</button>
 <div id="l_resultBox"></div>
-<button class="btn outline hidden" id="backToRegisterBtn" onclick="switchMode('register')">← 등록 화면으로</button>
+<button class="btn outline hidden" id="backToRegisterBtn" onclick="clearAndGoRegister()">← 등록 화면으로</button>
 </div>
 </div></div>
 <script>
 const API='https://script.google.com/macros/s/AKfycbwPXvTQijKGzN0BkOW79Mr2V96g3jX4n3nojcJbBgbYmUudslXDlUx1c-wa81MKE2zA6w/exec';
 let lastParams=null;
+function clearRegisterForm(){
+  document.getElementById('type').value='';
+  document.getElementById('kyogu-fields').classList.add('hidden');
+  document.getElementById('school-fields').classList.add('hidden');
+  ['district','cell','name_k','grade','name_s'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  document.getElementById('position').value='';
+  document.getElementById('department').value='';
+  hideErr();
+}
+function clearAndGoRegister(){
+  clearRegisterForm();
+  ['registerForm','confirmForm','doneForm','lookupForm'].forEach(id=>document.getElementById(id).classList.add('hidden'));
+  document.getElementById('registerForm').classList.remove('hidden');
+  document.getElementById('tab-register').classList.add('active');
+  document.getElementById('tab-lookup').classList.remove('active');
+  window.scrollTo(0,0);
+}
 function switchMode(mode){
-['registerForm','confirmForm','doneForm','lookupForm'].forEach(id=>document.getElementById(id).classList.add('hidden'));
-document.getElementById(mode==='lookup'?'lookupForm':'registerForm').classList.remove('hidden');
-document.getElementById('tab-register').classList.toggle('active',mode==='register');
-document.getElementById('tab-lookup').classList.toggle('active',mode==='lookup');
+  ['registerForm','confirmForm','doneForm','lookupForm'].forEach(id=>document.getElementById(id).classList.add('hidden'));
+  document.getElementById('tab-register').classList.toggle('active',mode==='register');
+  document.getElementById('tab-lookup').classList.toggle('active',mode==='lookup');
+  if(mode==='register'){
+    clearRegisterForm();
+    document.getElementById('registerForm').classList.remove('hidden');
+  } else {
+    document.getElementById('lookupForm').classList.remove('hidden');
+  }
 }
 function showScreen(id){['registerForm','confirmForm','doneForm'].forEach(i=>document.getElementById(i).classList.add('hidden'));document.getElementById(id).classList.remove('hidden');}
 function onTypeChange(){const v=document.getElementById('type').value;document.getElementById('kyogu-fields').classList.toggle('hidden',v!=='교구');document.getElementById('school-fields').classList.toggle('hidden',v!=='교회학교');}
@@ -129,93 +151,84 @@ function onLookupTypeChange(){const v=document.getElementById('l_type').value;do
 function showErr(msg){const b=document.getElementById('errBox');b.textContent=msg;b.classList.remove('hidden');}
 function hideErr(){document.getElementById('errBox').classList.add('hidden');}
 function goConfirm(){
-hideErr();
-const type=document.getElementById('type').value;
-if(!type){showErr('구분을 선택해 주세요.');return;}
-let params={type};
-if(type==='교구'){
-params.district=document.getElementById('district').value;
-params.cell=document.getElementById('cell').value.trim();
-params.position=document.getElementById('position').value;
-params.name=document.getElementById('name_k').value.trim();
-if(!params.district){showErr('교구를 선택해 주세요.');return;}
-if(!params.cell){showErr('목장을 입력해 주세요.');return;}
-if(!params.name){showErr('성명을 입력해 주세요.');return;}
-}else{
-params.department=document.getElementById('department').value;
-params.grade=document.getElementById('grade').value.trim();
-params.name=document.getElementById('name_s').value.trim();
-if(!params.department){showErr('부서를 선택해 주세요.');return;}
-if(!params.grade){showErr('학년을 입력해 주세요.');return;}
-if(!params.name){showErr('성명을 입력해 주세요.');return;}
-}
-lastParams=params;
-const rows=[];
-rows.push(['구분',params.type]);
-if(type==='교구'){rows.push(['교구',params.district]);rows.push(['목장',params.cell+'목장']);if(params.position)rows.push(['직분',params.position]);rows.push(['성명',params.name]);}
-else{rows.push(['부서',params.department]);rows.push(['학년',params.grade]);rows.push(['성명',params.name]);}
-document.getElementById('confirmRows').innerHTML=rows.map(([k,v])=>'<div class="confirm-row"><span class="confirm-key">'+k+'</span><span class="confirm-val">'+v+'</span></div>').join('');
-showScreen('confirmForm');window.scrollTo(0,0);
+  hideErr();
+  const type=document.getElementById('type').value;
+  if(!type){showErr('구분을 선택해 주세요.');return;}
+  let params={type};
+  if(type==='교구'){
+    params.district=document.getElementById('district').value;
+    params.cell=document.getElementById('cell').value.trim();
+    params.position=document.getElementById('position').value;
+    params.name=document.getElementById('name_k').value.trim();
+    if(!params.district){showErr('교구를 선택해 주세요.');return;}
+    if(!params.cell){showErr('목장을 입력해 주세요.');return;}
+    if(!params.name){showErr('성명을 입력해 주세요.');return;}
+  }else{
+    params.department=document.getElementById('department').value;
+    params.grade=document.getElementById('grade').value.trim();
+    params.name=document.getElementById('name_s').value.trim();
+    if(!params.department){showErr('부서를 선택해 주세요.');return;}
+    if(!params.grade){showErr('학년을 입력해 주세요.');return;}
+    if(!params.name){showErr('성명을 입력해 주세요.');return;}
+  }
+  lastParams=params;
+  const rows=[];
+  rows.push(['구분',params.type]);
+  if(type==='교구'){rows.push(['교구',params.district]);rows.push(['목장',params.cell+'목장']);if(params.position)rows.push(['직분',params.position]);rows.push(['성명',params.name]);}
+  else{rows.push(['부서',params.department]);rows.push(['학년',params.grade]);rows.push(['성명',params.name]);}
+  document.getElementById('confirmRows').innerHTML=rows.map(([k,v])=>'<div class="confirm-row"><span class="confirm-key">'+k+'</span><span class="confirm-val">'+v+'</span></div>').join('');
+  showScreen('confirmForm');window.scrollTo(0,0);
 }
 function backToRegister(){showScreen('registerForm');window.scrollTo(0,0);}
-function goNewRegister(){
-document.getElementById('type').value='';
-document.getElementById('kyogu-fields').classList.add('hidden');
-document.getElementById('school-fields').classList.add('hidden');
-['district','cell','name_k','grade','name_s'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
-document.getElementById('position').value='';
-document.getElementById('department').value='';
-hideErr();showScreen('registerForm');window.scrollTo(0,0);
-}
 async function doSubmit(){
-const btn=document.getElementById('doSubmitBtn');
-btn.innerHTML='<span class="spinner"></span>등록 중...';btn.disabled=true;
-try{
-const form=new FormData();
-Object.entries(lastParams).forEach(([k,v])=>form.append(k,v));
-const res=await fetch(API,{method:'POST',body:form});
-const data=await res.json();
-let html='';
-if(data.ok){html=data.isDup?'<div class="result-dup"><div class="result-title">⚠️ 중복 등록 처리됨</div><div class="result-info">'+data.message+'</div></div>':'<div class="result-ok"><div class="result-title">✅ 등록 완료!</div><div class="result-info">'+data.message+'</div></div>';}
-else{html='<div class="result-notfound"><div class="result-title">❌ 등록 실패</div><div class="result-info">'+(data.message||'오류가 발생했습니다.')+'</div></div>';}
-document.getElementById('doneResult').innerHTML=html;
-showScreen('doneForm');window.scrollTo(0,0);
-}catch(e){alert('네트워크 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.');}
-finally{btn.innerHTML='✅ 등록하기';btn.disabled=false;}
+  const btn=document.getElementById('doSubmitBtn');
+  btn.innerHTML='<span class="spinner"></span>등록 중...';btn.disabled=true;
+  try{
+    const form=new FormData();
+    Object.entries(lastParams).forEach(([k,v])=>form.append(k,v));
+    const res=await fetch(API,{method:'POST',body:form});
+    const data=await res.json();
+    let html='';
+    if(data.ok){html=data.isDup?'<div class="result-dup"><div class="result-title">⚠️ 중복 등록 처리됨</div><div class="result-info">'+data.message+'</div></div>':'<div class="result-ok"><div class="result-title">✅ 등록 완료!</div><div class="result-info">'+data.message+'</div></div>';}
+    else{html='<div class="result-notfound"><div class="result-title">❌ 등록 실패</div><div class="result-info">'+(data.message||'오류가 발생했습니다.')+'</div></div>';}
+    document.getElementById('doneResult').innerHTML=html;
+    showScreen('doneForm');window.scrollTo(0,0);
+  }catch(e){alert('네트워크 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.');}
+  finally{btn.innerHTML='✅ 등록하기';btn.disabled=false;}
 }
 function prefillLookup(){
-if(!lastParams)return;
-const type=lastParams.type;
-document.getElementById('l_type').value=type;onLookupTypeChange();
-if(type==='교구'){document.getElementById('l_district').value=lastParams.district||'';document.getElementById('l_cell').value=lastParams.cell||'';document.getElementById('l_name_k').value=lastParams.name||'';}
-else{document.getElementById('l_department').value=lastParams.department||'';document.getElementById('l_grade').value=lastParams.grade||'';document.getElementById('l_name_s').value=lastParams.name||'';}
+  if(!lastParams)return;
+  const type=lastParams.type;
+  document.getElementById('l_type').value=type;onLookupTypeChange();
+  if(type==='교구'){document.getElementById('l_district').value=lastParams.district||'';document.getElementById('l_cell').value=lastParams.cell||'';document.getElementById('l_name_k').value=lastParams.name||'';}
+  else{document.getElementById('l_department').value=lastParams.department||'';document.getElementById('l_grade').value=lastParams.grade||'';document.getElementById('l_name_s').value=lastParams.name||'';}
 }
 async function doLookup(){
-const errBox=document.getElementById('l_errBox');
-errBox.classList.add('hidden');document.getElementById('l_resultBox').innerHTML='';document.getElementById('backToRegisterBtn').classList.add('hidden');
-const type=document.getElementById('l_type').value;
-if(!type){errBox.textContent='구분을 선택해 주세요.';errBox.classList.remove('hidden');return;}
-let qp={action:'lookup',type};
-if(type==='교구'){qp.group=document.getElementById('l_district').value;qp.sub=document.getElementById('l_cell').value.trim();qp.name=document.getElementById('l_name_k').value.trim();}
-else{qp.group=document.getElementById('l_department').value;qp.sub=document.getElementById('l_grade').value.trim();qp.name=document.getElementById('l_name_s').value.trim();}
-const btn=document.getElementById('lookupBtn');
-btn.innerHTML='<span class="spinner"></span>조회 중...';btn.disabled=true;
-try{
-const qs=new URLSearchParams(qp).toString();
-const res=await fetch(API+'?'+qs);
-const data=await res.json();
-const box=document.getElementById('l_resultBox');
-if(!data.ok){errBox.textContent=data.message||'오류가 발생했습니다.';errBox.classList.remove('hidden');return;}
-if(!data.found){box.innerHTML='<div class="result-notfound"><div class="result-title">❌ 미등록</div><div class="result-info">입력하신 정보로 등록된 내역이 없습니다.</div></div>';}
-else{
-const r=data.rows[0];
-const icon=r.status==='중복'?'⚠️':'✅';
-const info=type==='교구'?'구분: '+r.type+' | 교구: '+r.group+' | 목장: '+r.sub+' | 성명: '+r.name:'구분: '+r.type+' | 부서: '+r.group+' | 학년: '+r.sub+' | 성명: '+r.name;
-box.innerHTML='<br><div class="result-found"><div class="result-title">'+icon+' 등록 확인 ('+data.count+'건)</div><div class="result-info">'+info+'</div>'+(r.note?'<div class="result-info" style="margin-top:4px;color:#9a3412">비고: '+r.note+'</div>':'')+'</div>';
-}
-document.getElementById('backToRegisterBtn').classList.remove('hidden');
-}catch(e){errBox.textContent='네트워크 오류가 발생했습니다.';errBox.classList.remove('hidden');}
-finally{btn.innerHTML='조회하기';btn.disabled=false;}
+  const errBox=document.getElementById('l_errBox');
+  errBox.classList.add('hidden');document.getElementById('l_resultBox').innerHTML='';document.getElementById('backToRegisterBtn').classList.add('hidden');
+  const type=document.getElementById('l_type').value;
+  if(!type){errBox.textContent='구분을 선택해 주세요.';errBox.classList.remove('hidden');return;}
+  let qp={action:'lookup',type};
+  if(type==='교구'){qp.group=document.getElementById('l_district').value;qp.sub=document.getElementById('l_cell').value.trim();qp.name=document.getElementById('l_name_k').value.trim();}
+  else{qp.group=document.getElementById('l_department').value;qp.sub=document.getElementById('l_grade').value.trim();qp.name=document.getElementById('l_name_s').value.trim();}
+  const btn=document.getElementById('lookupBtn');
+  btn.innerHTML='<span class="spinner"></span>조회 중...';btn.disabled=true;
+  try{
+    const qs=new URLSearchParams(qp).toString();
+    const res=await fetch(API+'?'+qs);
+    const data=await res.json();
+    const box=document.getElementById('l_resultBox');
+    if(!data.ok){errBox.textContent=data.message||'오류가 발생했습니다.';errBox.classList.remove('hidden');return;}
+    if(!data.found){box.innerHTML='<div class="result-notfound"><div class="result-title">❌ 미등록</div><div class="result-info">입력하신 정보로 등록된 내역이 없습니다.</div></div>';}
+    else{
+      const r=data.rows[0];
+      const icon=r.status==='중복'?'⚠️':'✅';
+      const info=type==='교구'?'구분: '+r.type+' | 교구: '+r.group+' | 목장: '+r.sub+' | 성명: '+r.name:'구분: '+r.type+' | 부서: '+r.group+' | 학년: '+r.sub+' | 성명: '+r.name;
+      box.innerHTML='<br><div class="result-found"><div class="result-title">'+icon+' 등록 확인 ('+data.count+'건)</div><div class="result-info">'+info+'</div>'+(r.note?'<div class="result-info" style="margin-top:4px;color:#9a3412">비고: '+r.note+'</div>':'')+'</div>';
+    }
+    document.getElementById('backToRegisterBtn').classList.remove('hidden');
+  }catch(e){errBox.textContent='네트워크 오류가 발생했습니다.';errBox.classList.remove('hidden');}
+  finally{btn.innerHTML='조회하기';btn.disabled=false;}
 }
 </script>
 </body></html>
