@@ -1,193 +1,264 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head>
-<meta charset="UTF-8">
-<meta name="color-scheme" content="light">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>써바이블 등록 현황 조회 (관리자)</title>
-<meta name="robots" content="noindex,nofollow">
-<style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Apple SD Gothic Neo","Noto Sans KR",Arial,sans-serif;background:#f0f4ff;color:#333;min-height:100vh}
-.container{max-width:900px;margin:0 auto;padding:24px 16px}
-.card{background:#fff;border-radius:14px;box-shadow:0 2px 12px rgba(0,0,0,.08);padding:28px 24px;margin-bottom:20px}
-h1{font-size:20px;font-weight:700;color:#222;margin-bottom:4px;text-align:center}
-.subtitle{font-size:13px;color:#888;text-align:center;margin-bottom:24px}
-.badge-admin{display:inline-block;background:#3367d6;color:#fff;font-size:11px;font-weight:700;padding:2px 8px;border-radius:20px;vertical-align:middle;margin-left:6px}
-.login-wrap{max-width:340px;margin:0 auto;padding:16px 0}
-.login-wrap label{display:block;font-size:13px;font-weight:600;color:#555;margin-bottom:6px}
-.login-wrap input{width:100%;padding:11px 14px;border:1.5px solid #ddd;border-radius:8px;font-size:15px;letter-spacing:3px;text-align:center}
-.login-wrap input:focus{outline:none;border-color:#3367d6}
-.btn{display:block;width:100%;padding:12px;background:#3367d6;color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;margin-top:12px;transition:background .2s}
-.btn:hover{background:#2850a0}
-.btn.sm{width:auto;padding:8px 20px;font-size:13px;display:inline-block;margin-top:0}
-.btn.outline{background:#fff;color:#3367d6;border:2px solid #3367d6}.btn.outline:hover{background:#f0f4ff}
-.btn.danger{background:#e74c3c}.btn.danger:hover{background:#c0392b}
-.btn.success{background:#27ae60}.btn.success:hover{background:#219150}
-.filter-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:16px}
-.filter-item label{display:block;font-size:12px;font-weight:600;color:#777;margin-bottom:4px}
-.filter-item select,.filter-item input{width:100%;padding:9px 10px;border:1.5px solid #ddd;border-radius:8px;font-size:13px;background:#fafafa}
-.filter-item select:focus,.filter-item input:focus{outline:none;border-color:#3367d6;background:#fff}
-.filter-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:4px}
-.total-badge{background:#f0f4ff;color:#3367d6;border:1.5px solid #c3d4f7;border-radius:20px;padding:4px 14px;font-size:13px;font-weight:700}
-.table-wrap{overflow-x:auto;margin-top:8px}
-table{width:100%;border-collapse:collapse;font-size:13px}
-thead th{background:#3367d6;color:#fff;padding:10px 12px;text-align:left;font-weight:600;white-space:nowrap}
-tbody tr{border-bottom:1px solid #f0f0f0;transition:background .15s}
-tbody tr:hover{background:#f5f8ff}
-tbody td{padding:9px 12px;color:#333;vertical-align:middle}
-tbody td:first-child{color:#aaa;font-size:12px}
-.empty-row td{text-align:center;color:#aaa;padding:32px;font-size:14px}
-.tag{display:inline-block;padding:2px 10px;border-radius:20px;font-size:11px;font-weight:700}
-.tag-kyogu{background:#e8f4fd;color:#1a73e8}
-.tag-school{background:#e6f4ea;color:#188038}
-.hidden{display:none!important}
-#errMsg{color:#c0392b;font-size:13px;text-align:center;margin-top:8px;min-height:18px}
-.spinner{display:inline-block;width:16px;height:16px;border:2px solid rgba(255,255,255,.4);border-top:2px solid #fff;border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-right:4px}
-@keyframes spin{to{transform:rotate(360deg)}}
-@media print{.no-print{display:none!important}.card{box-shadow:none;padding:0}table{font-size:11px}}
-@media(max-width:600px){.filter-grid{grid-template-columns:1fr 1fr}table{font-size:12px}thead th,tbody td{padding:7px 8px}}
-</style>
-</head>
-<body>
-<div class="container">
-<div class="card">
-<h1>썸머 써 바이블 완서자 현황<span class="badge-admin">관리자</span></h1>
-<p class="subtitle">2026 고척교회 썸머 써 바이블 · 대상자 시트 기반 조회</p>
-<div id="loginSection" class="login-wrap">
-<label for="pwInput">관리자 비밀번호</label>
-<input type="password" id="pwInput" placeholder="비밀번호 입력" onkeydown="if(event.key==='Enter')doLogin()">
-<div id="errMsg"></div>
-<button class="btn" onclick="doLogin()">확인</button>
-</div>
-<div id="mainSection" class="hidden">
-<div class="filter-grid">
-<div class="filter-item">
-<label>구분</label>
-<select id="fType" onchange="onTypeChange()">
-<option value="">전체</option>
-<option value="교구">교구</option>
-<option value="교회학교">교회학교</option>
-</select>
-</div>
-<div class="filter-item">
-<label id="fGroupLabel">교구/부서</label>
-<select id="fGroup">
-<option value="">전체</option>
-</select>
-</div>
-<div class="filter-item">
-<label id="fSubLabel">목장/학년</label>
-<input type="text" id="fSub" placeholder="예: 1">
-</div>
-<div class="filter-item">
-<label>성명 검색</label>
-<input type="text" id="fName" placeholder="이름 일부 입력">
-</div>
-</div>
-<div class="filter-actions no-print">
-<button class="btn sm success" onclick="doSearch()"><span id="searchSpinner" class="spinner hidden"></span>조회</button>
-<button class="btn sm outline" onclick="doReset()">초기화</button>
-<button class="btn sm outline" onclick="window.print()">&#128424; 인쇄</button>
-<button class="btn sm danger" onclick="doLogout()">로그아웃</button>
-<span class="total-badge hidden" id="totalBadge">0건</span>
-</div>
-</div>
-</div>
-<div class="card hidden" id="resultCard">
-<div class="table-wrap">
-<table>
-<thead>
-<tr><th>#</th><th>구분</th><th>교구/부서</th><th>목장/학년</th><th>직분</th><th>성명</th><th>등록일시</th></tr>
-</thead>
-<tbody id="resultBody">
-<tr class="empty-row"><td colspan="7">조회 버튼을 눌러 주세요.</td></tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-<script>
-var API='https://script.google.com/macros/s/AKfycbwPXvTQijKGzN0BkOW79Mr2V96g3jX4n3nojcJbBgbYmUudslXDlUx1c-wa81MKE2zA6w/exec';
-var DISTRICTS=['믿음','소망','사랑','섬김','은혜','화평','기쁨','새가족'];
-var DEPARTMENTS=['사랑부','영아부','유아부','유치부','유년부','초등부','중등부','고등부','청년부'];
-var adminPw='';
-function doLogin(){
-  var pw=document.getElementById('pwInput').value.trim();
-  if(!pw){setErr('비밀번호를 입력해 주세요.');return;}
-  setErr('');
-  var btn=document.querySelector('#loginSection .btn');
-  btn.textContent='확인 중…';btn.disabled=true;
-  fetch(API+'?action=list&pw='+encodeURIComponent(pw)+'&type=__chk__')
-  .then(function(r){return r.json();})
-  .then(function(d){
-    btn.textContent='확인';btn.disabled=false;
-    if(d.ok===false&&d.error==='unauthorized'){setErr('비밀번호가 올바르지 않습니다.');}
-    else{adminPw=pw;document.getElementById('loginSection').classList.add('hidden');document.getElementById('mainSection').classList.remove('hidden');buildGroupOptions('');doSearch();}
-  })
-  .catch(function(){btn.textContent='확인';btn.disabled=false;setErr('서버 연결 오류.');});
-}
-function doLogout(){
-  adminPw='';document.getElementById('pwInput').value='';
-  document.getElementById('loginSection').classList.remove('hidden');
-  document.getElementById('mainSection').classList.add('hidden');
-  document.getElementById('resultCard').classList.add('hidden');
-  document.getElementById('totalBadge').classList.add('hidden');
-}
-function setErr(m){document.getElementById('errMsg').textContent=m;}
-function onTypeChange(){
-  var t=document.getElementById('fType').value;
-  buildGroupOptions(t);
-  document.getElementById('fGroup').value='';
-  document.getElementById('fSub').value='';
-  document.getElementById('fSubLabel').textContent=t==='교회학교'?'학년':'목장번호';
-}
-function buildGroupOptions(type){
-  var sel=document.getElementById('fGroup');
-  var lbl=document.getElementById('fGroupLabel');
-  var list=[];
-  if(type==='교구'){list=DISTRICTS;lbl.textContent='교구';}
-  else if(type==='교회학교'){list=DEPARTMENTS;lbl.textContent='부서';}
-  else{lbl.textContent='교구/부서';}
-  sel.innerHTML='<option value="">전체</option>';
-  list.forEach(function(v){var o=document.createElement('option');o.value=v;o.textContent=v;sel.appendChild(o);});
-}
-function doSearch(){
-  var type=document.getElementById('fType').value;
-  var group=document.getElementById('fGroup').value;
-  var sub=document.getElementById('fSub').value.trim();
-  var name=document.getElementById('fName').value.trim();
-  document.getElementById('searchSpinner').classList.remove('hidden');
-  var url=API+'?action=list&pw='+encodeURIComponent(adminPw);
-  if(type)url+='&type='+encodeURIComponent(type);
-  if(group)url+='&group='+encodeURIComponent(group);
-  if(sub)url+='&sub='+encodeURIComponent(sub);
-  if(name)url+='&name='+encodeURIComponent(name);
-  fetch(url).then(function(r){return r.json();}).then(function(d){
-    document.getElementById('searchSpinner').classList.add('hidden');
-    if(!d.ok){alert(d.message||'오류');return;}
-    renderTable(d.rows,d.total);
-  }).catch(function(){document.getElementById('searchSpinner').classList.add('hidden');alert('서버 연결 오류.');});
-}
-function doReset(){
-  document.getElementById('fType').value='';
-  document.getElementById('fSub').value='';
-  document.getElementById('fName').value='';
-  buildGroupOptions('');
-  document.getElementById('fGroup').value='';
-  document.getElementById('fSubLabel').textContent='목장/학년';
-  doSearch();
-}
-function renderTable(rows,total){
-  var tbody=document.getElementById('resultBody');
-  document.getElementById('resultCard').classList.remove('hidden');
-  var badge=document.getElementById('totalBadge');
-  badge.textContent=total+'건';badge.classList.remove('hidden');
-  if(!rows||rows.length===0){tbody.innerHTML='<tr class="empty-row"><td colspan="7">조건에 맞는 등록자가 없습니다.</td></tr>';return;}
-  tbody.innerHTML=rows.map(function(r){
-    return '<tr><td>'+r.no+'</td><td><span class="tag '+(r.type==='교구'?'tag-kyogu':'tag-school')+'">'+r.type+'</span></td><td>'+r.group+'</td><td>'+r.sub+'</td><td>'+r.position+'</td><td><strong>'+r.name+'</strong></td><td style="color:#999;font-size:12px">'+r.regDate+'</td></tr>';
-  }).join('');
-}
-</script>
-</body>
-</html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="color-scheme" content="light">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>써바이블 등록 현황 조회 (관리자)</title>
+  <meta name="robots" content="noindex,nofollow">
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Apple SD Gothic Neo","Noto Sans KR",Arial,sans-serif;background:#f0f4ff;color:#333;min-height:100vh}
+    .container{max-width:900px;margin:0 auto;padding:24px 16px}
+    .card{background:#fff;border-radius:14px;box-shadow:0 2px 12px rgba(0,0,0,.08);padding:28px 24px;margin-bottom:20px}
+    h1{font-size:20px;font-weight:700;color:#222;margin-bottom:4px;text-align:center}
+    .subtitle{font-size:13px;color:#888;text-align:center;margin-bottom:24px}
+    .badge-admin{display:inline-block;background:#3367d6;color:#fff;font-size:11px;font-weight:700;padding:2px 8px;border-radius:20px;vertical-align:middle;margin-left:6px}
+    .login-wrap{max-width:340px;margin:0 auto;padding:16px 0}
+    .login-wrap label{display:block;font-size:13px;font-weight:600;color:#555;margin-bottom:6px}
+    .login-wrap input{width:100%;padding:11px 14px;border:1.5px solid #ddd;border-radius:8px;font-size:15px;letter-spacing:3px;text-align:center}
+    .login-wrap input:focus{outline:none;border-color:#3367d6}
+    .btn{display:block;width:100%;padding:12px;background:#3367d6;color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;margin-top:12px;transition:background .2s}
+    .btn:hover{background:#2850a0}
+    .btn.sm{width:auto;padding:8px 20px;font-size:13px;display:inline-block;margin-top:0}
+    .btn.outline{background:#fff;color:#3367d6;border:2px solid #3367d6}.btn.outline:hover{background:#f0f4ff}
+    .btn.danger{background:#e74c3c}.btn.danger:hover{background:#c0392b}
+    .btn.success{background:#27ae60}.btn.success:hover{background:#219150}
+    .filter-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:16px}
+    .filter-item label{display:block;font-size:12px;font-weight:600;color:#777;margin-bottom:4px}
+    .filter-item select,.filter-item input{width:100%;padding:9px 10px;border:1.5px solid #ddd;border-radius:8px;font-size:13px;background:#fafafa}
+    .filter-item select:focus,.filter-item input:focus{outline:none;border-color:#3367d6;background:#fff}
+    .filter-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:4px}
+    .total-badge{background:#f0f4ff;color:#3367d6;border:1.5px solid #c3d4f7;border-radius:20px;padding:4px 14px;font-size:13px;font-weight:700}
+    .table-wrap{overflow-x:auto;margin-top:8px}
+    table{width:100%;border-collapse:collapse;font-size:13px}
+    thead th{background:#3367d6;color:#fff;padding:10px 12px;text-align:left;font-weight:600;white-space:nowrap;cursor:pointer;user-select:none;position:relative}
+    thead th:hover{background:#2850a0}
+    thead th.sort-asc::after{content:' \25B2';font-size:10px;opacity:.9}
+    thead th.sort-desc::after{content:' \25BC';font-size:10px;opacity:.9}
+    thead th:not(.sort-asc):not(.sort-desc)::after{content:' \25B2\25BC';font-size:8px;opacity:.35}
+    tbody tr{border-bottom:1px solid #f0f0f0;transition:background .15s}
+    tbody tr:hover{background:#f5f8ff}
+    tbody td{padding:9px 12px;color:#333;vertical-align:middle}
+    tbody td:first-child{color:#aaa;font-size:12px}
+    .empty-row td{text-align:center;color:#aaa;padding:32px;font-size:14px}
+    .tag{display:inline-block;padding:2px 10px;border-radius:20px;font-size:11px;font-weight:700}
+    .tag-kyogu{background:#e8f4fd;color:#1a73e8}
+    .tag-school{background:#e6f4ea;color:#188038}
+    .hidden{display:none!important}
+    #errMsg{color:#c0392b;font-size:13px;text-align:center;margin-top:8px;min-height:18px}
+    .spinner{display:inline-block;width:16px;height:16px;border:2px solid rgba(255,255,255,.4);border-top:2px solid #fff;border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-right:4px}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    @media print{.no-print{display:none!important}.card{box-shadow:none;padding:0}table{font-size:11px}}
+    @media(max-width:600px){.filter-grid{grid-template-columns:1fr 1fr}table{font-size:12px}thead th,tbody td{padding:7px 8px}}
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="card">
+        <h1>썸머 써 바이블 완서자 현황<span class="badge-admin">관리자</span>span></h1>
+      <p class="subtitle">2026 고척교회 썸머 써 바이블 · 대상자 시트 기반 조회</p>p>
+      <div id="loginSection" class="login-wrap">
+      <label for="pwInput">관리자 비밀번호</label>label>
+      <input type="password" id="pwInput" placeholder="비밀번호 입력" onkeydown="if(event.key==='Enter')doLogin()">
+      <div id="errMsg"></div>div>
+      <button class="btn" onclick="doLogin()">확인</button>button>
+      </div>div>
+      <div id="mainSection" class="hidden">
+      <div class="filter-grid">
+      <div class="filter-item">
+      <label>구분</label>
+      <select id="fType" onchange="onTypeChange()">
+      <option value="">전체</option>option>
+      <option value="교구">교구</option>option>
+      <option value="교회학교">교회학교</option>option>
+      </select>select>
+      </div>div>
+      <div class="filter-item">
+      <label id="fGroupLabel">교구/부서</label>
+      <select id="fGroup">
+      <option value="">전체</option>option>
+      </select>select>
+      </div>div>
+      <div class="filter-item">
+      <label id="fSubLabel">목장/학년</label>
+      <input type="text" id="fSub" placeholder="예: 1">
+      </div>div>
+      <div class="filter-item">
+      <label>성명 검색</label>
+      <input type="text" id="fName" placeholder="이름 일부 입력">
+      </div>div>
+      </div>div>
+      <div class="filter-actions no-print">
+      <button class="btn sm success" onclick="doSearch()"><span id="searchSpinner" class="spinner hidden"></span>span>조회</button>button>
+      <button class="btn sm outline" onclick="doReset()">초기화</button>button>
+      <button class="btn sm outline" onclick="window.print()">&#128424; 인쇄</button>button>
+      <button class="btn sm danger" onclick="doLogout()">로그아웃</button>button>
+      <span class="total-badge hidden" id="totalBadge">0건</span>span>
+      </div>div>
+      </div>div>
+      </div>div>
+    <div class="card hidden" id="resultCard">
+    <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th onclick="sortTable(0)" data-col="0">#</th>th>
+          <th onclick="sortTable(1)" data-col="1">구분</th>th>
+          <th onclick="sortTable(2)" data-col="2">교구/부서</th>th>
+          <th onclick="sortTable(3)" data-col="3">목장/학년</th>th>
+          <th onclick="sortTable(4)" data-col="4">직분</th>th>
+          <th onclick="sortTable(5)" data-col="5">성명</th>th>
+          <th onclick="sortTable(6)" data-col="6">등록일시</th>th>
+        </tr>
+      </thead>
+      <tbody id="resultBody">
+        <tr class="empty-row"><td colspan="7">조회 버튼을 눌러 주세요.</td>td></tr>
+      </tbody>tbody>
+    </table>
+    </div>div>
+    </div>div>
+    </div>div>
+    <script>
+      var API='https://script.google.com/macros/s/AKfycbwPXvTQijKGzN0BkOW79Mr2V96g3jX4n3nojcJbBgbYmUudslXDlUx1c-wa81MKE2zA6w/exec';
+      var DISTRICTS=['믿음','소망','사랑','섬김','은혜','화평','기쁨','새가족'];
+      var DEPARTMENTS=['사랑부','영아부','유아부','유치부','유년부','초등부','중등부','고등부','청년부'];
+      var adminPw='';
+      var currentRows=[];
+      var sortCol=-1;
+      var sortDir=1;
+
+      function doLogin(){
+        var pw=document.getElementById('pwInput').value.trim();
+        if(!pw){setErr('비밀번호를 입력해 주세요.');return;}
+        setErr('');
+        var btn=document.querySelector('#loginSection .btn');
+        btn.textContent='확인 중…';btn.disabled=true;
+        fetch(API+'?action=list&pw='+encodeURIComponent(pw)+'&type=__chk__')
+        .then(function(r){return r.json();})
+        .then(function(d){
+          btn.textContent='확인';btn.disabled=false;
+          if(d.ok===false&&d.error==='unauthorized'){setErr('비밀번호가 올바르지 않습니다.');}
+          else{adminPw=pw;document.getElementById('loginSection').classList.add('hidden');document.getElementById('mainSection').classList.remove('hidden');buildGroupOptions('');doSearch();}
+        })
+        .catch(function(){btn.textContent='확인';btn.disabled=false;setErr('서버 연결 오류.');});
+      }
+      function doLogout(){
+        adminPw='';document.getElementById('pwInput').value='';
+        document.getElementById('loginSection').classList.remove('hidden');
+        document.getElementById('mainSection').classList.add('hidden');
+        document.getElementById('resultCard').classList.add('hidden');
+        document.getElementById('totalBadge').classList.add('hidden');
+        currentRows=[];sortCol=-1;sortDir=1;
+      }
+      function setErr(m){document.getElementById('errMsg').textContent=m;}
+      function onTypeChange(){
+        var t=document.getElementById('fType').value;
+        buildGroupOptions(t);
+        document.getElementById('fGroup').value='';
+        document.getElementById('fSub').value='';
+        document.getElementById('fSubLabel').textContent=t==='교회학교'?'학년':'목장번호';
+      }
+      function buildGroupOptions(type){
+        var sel=document.getElementById('fGroup');
+        var lbl=document.getElementById('fGroupLabel');
+        var list=[];
+        if(type==='교구'){list=DISTRICTS;lbl.textContent='교구';}
+        else if(type==='교회학교'){list=DEPARTMENTS;lbl.textContent='부서';}
+        else{lbl.textContent='교구/부서';}
+        sel.innerHTML='<option value="">전체</option>';
+        list.forEach(function(v){var o=document.createElement('option');o.value=v;o.textContent=v;sel.appendChild(o);});
+      }
+      function doSearch(){
+        var type=document.getElementById('fType').value;
+        var group=document.getElementById('fGroup').value;
+        var sub=document.getElementById('fSub').value.trim();
+        var name=document.getElementById('fName').value.trim();
+        document.getElementById('searchSpinner').classList.remove('hidden');
+        var url=API+'?action=list&pw='+encodeURIComponent(adminPw);
+        if(type)url+='&type='+encodeURIComponent(type);
+        if(group)url+='&group='+encodeURIComponent(group);
+        if(sub)url+='&sub='+encodeURIComponent(sub);
+        if(name)url+='&name='+encodeURIComponent(name);
+        fetch(url).then(function(r){return r.json();}).then(function(d){
+          document.getElementById('searchSpinner').classList.add('hidden');
+          if(!d.ok){alert(d.message||'오류');return;}
+          currentRows=d.rows||[];
+          sortCol=-1;sortDir=1;
+          updateSortHeaders(-1);
+          renderTable(currentRows,d.total);
+        }).catch(function(){document.getElementById('searchSpinner').classList.add('hidden');alert('서버 연결 오류.');});
+      }
+      function doReset(){
+        document.getElementById('fType').value='';
+        document.getElementById('fSub').value='';
+        document.getElementById('fName').value='';
+        buildGroupOptions('');
+        document.getElementById('fGroup').value='';
+        document.getElementById('fSubLabel').textContent='목장/학년';
+        doSearch();
+      }
+      function getColValue(row,col){
+        switch(col){
+          case 0:return row.no;
+          case 1:return row.type||'';
+          case 2:return row.group||'';
+          case 3:return row.sub||'';
+          case 4:return row.position||'';
+          case 5:return row.name||'';
+          case 6:return row.regDate||'';
+          default:return '';
+        }
+      }
+      function sortTable(col){
+        if(sortCol===col){
+          sortDir*=-1;
+        }else{
+          sortCol=col;
+          sortDir=1;
+        }
+        var sorted=currentRows.slice().sort(function(a,b){
+          var va=getColValue(a,col);
+          var vb=getColValue(b,col);
+          var na=parseFloat(va);
+          var nb=parseFloat(vb);
+          if(!isNaN(na)&&!isNaN(nb)){
+            return (na-nb)*sortDir;
+          }
+      return va.localeCompare(vb,'ko')*sortDir;
+        });
+        updateSortHeaders(col);
+        renderRows(sorted);
+      }
+      function updateSortHeaders(activeCol){
+        var ths=document.querySelectorAll('thead th');
+        ths.forEach(function(th,i){
+          th.classList.remove('sort-asc','sort-desc');
+          if(i===activeCol){
+            th.classList.add(sortDir===1?'sort-asc':'sort-desc');
+          }
+        });
+      }
+      function renderTable(rows,total){
+        var badge=document.getElementById('totalBadge');
+        document.getElementById('resultCard').classList.remove('hidden');
+        badge.textContent=total+'건';badge.classList.remove('hidden');
+        renderRows(rows);
+      }
+      function renderRows(rows){
+        var tbody=document.getElementById('resultBody');
+        if(!rows||rows.length===0){tbody.innerHTML='<tr class="empty-row"><td colspan="7">조건에 맞는 등록자가 없습니다.</td></tr>';return;}
+        tbody.innerHTML=rows.map(function(r){
+          return '<tr><td>'+r.no+'</td><td><span class="tag '+(r.type==='교구'?'tag-kyogu':'tag-school')+'">'+r.type+'</span></td><td>'+r.group+'</td><td>'+r.sub+'</td><td>'+r.position+'</td><td><strong>'+r.name+'</strong></td><td style="color:#999;font-size:12px">'+r.regDate+'</td></tr>';
+        }).join('');
+      }
+    </script>
+  </body>
+</html>html>
+    </script>
+        </tr>
+      </thead>
+    </table></label></label></h1>
+  </body>
+  </style></title>
+  </head>
