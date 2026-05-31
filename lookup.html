@@ -56,8 +56,8 @@ tbody td:first-child{color:#aaa;font-size:12px}
 <body>
 <div class="container">
 <div class="card">
-<h1>썸머 써 바이블 완서자 현황<span class="badge-admin">관리자</span></h1>
-<p class="subtitle">2026 고척교회 썸머 써 바이블 · 대상자 시트 기반 조회</p>
+<h1>썸머 써 바이블 완서자 현황</h1>
+<p class="subtitle">2026 고척교회 썸머 써 바이블 행사 </p>
 <div id="loginSection" class="login-wrap">
 <label for="pwInput">관리자 비밀번호</label>
 <input type="password" id="pwInput" placeholder="비밀번호 입력" onkeydown="if(event.key==='Enter')doLogin()">
@@ -92,7 +92,6 @@ tbody td:first-child{color:#aaa;font-size:12px}
 <div class="filter-actions no-print">
 <button class="btn sm success" onclick="doSearch()"><span id="searchSpinner" class="spinner hidden"></span>조회</button>
 <button class="btn sm outline" onclick="doReset()">초기화</button>
-<button class="btn sm outline" onclick="window.print()">&#128424; 인쇄</button>
 <button class="btn sm danger" onclick="doLogout()">로그아웃</button>
 <span class="total-badge hidden" id="totalBadge">0건</span>
 </div>
