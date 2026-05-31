@@ -78,7 +78,10 @@ select:focus,input:focus{outline:none;border-color:#3367d6;background:#fff}
 <div id="registerForm">
 <div class="section-title">등록 정보 입력</div>
 <label>구분</label>
-<select id="type" onchange="onTypeChange()"><option value="">선택</option><option value="교구">교구</option><option value="교회학교">교회학교</option></select>
+<div class="radio-btn-wrap">
+<input type="radio" name="type" id="t_1" value="교구" onchange="onTypeChange()"><label for="t_1">교구</label>
+<input type="radio" name="type" id="t_2" value="교회학교" onchange="onTypeChange()"><label for="t_2">교회학교</label>
+</div>
 <div id="kyogu-fields" class="hidden">
 <label>교구</label>
 <div class="radio-btn-wrap">
@@ -138,7 +141,10 @@ select:focus,input:focus{outline:none;border-color:#3367d6;background:#fff}
 <div id="lookupForm" class="hidden">
 <div class="section-title">등록 내역 조회</div>
 <label>구분</label>
-<select id="l_type" onchange="onLookupTypeChange()"><option value="">선택</option><option value="교구">교구</option><option value="교회학교">교회학교</option></select>
+<div class="radio-btn-wrap">
+<input type="radio" name="l_type" id="lt_1" value="교구" onchange="onLookupTypeChange()"><label for="lt_1">교구</label>
+<input type="radio" name="l_type" id="lt_2" value="교회학교" onchange="onLookupTypeChange()"><label for="lt_2">교회학교</label>
+</div>
 <div id="l_kyogu" class="hidden">
 <label>교구</label>
 <div class="radio-btn-wrap">
@@ -194,7 +200,7 @@ function showClosedScreen(){
 }
 let lastParams=null;
 function clearRegisterForm(){
-  document.getElementById('type').value='';
+  document.querySelectorAll('input[name="type"]').forEach(r=>r.checked=false);
   document.getElementById('kyogu-fields').classList.add('hidden');
   document.getElementById('school-fields').classList.add('hidden');
   ['cell','name_k','grade','name_s'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});document.querySelectorAll('input[name="district"]').forEach(r=>r.checked=false);
@@ -223,13 +229,13 @@ clearRegisterForm();
   }
 }
 function showScreen(id){['registerForm','confirmForm','doneForm'].forEach(i=>document.getElementById(i).classList.add('hidden'));document.getElementById(id).classList.remove('hidden');}
-function onTypeChange(){const v=document.getElementById('type').value;document.getElementById('kyogu-fields').classList.toggle('hidden',v!=='교구');document.getElementById('school-fields').classList.toggle('hidden',v!=='교회학교');}
-function onLookupTypeChange(){const v=document.getElementById('l_type').value;document.getElementById('l_kyogu').classList.toggle('hidden',v!=='교구');document.getElementById('l_school').classList.toggle('hidden',v!=='교회학교');}
+function onTypeChange(){const v=(document.querySelector('input[name="type"]:checked')||{}).value||'';document.getElementById('kyogu-fields').classList.toggle('hidden',v!=='교구');document.getElementById('school-fields').classList.toggle('hidden',v!=='교회학교');}
+function onLookupTypeChange(){const v=(document.querySelector('input[name="l_type"]:checked')||{}).value||'';document.getElementById('l_kyogu').classList.toggle('hidden',v!=='교구');document.getElementById('l_school').classList.toggle('hidden',v!=='교회학교');}
 function showErr(msg){const b=document.getElementById('errBox');b.textContent=msg;b.classList.remove('hidden');}
 function hideErr(){document.getElementById('errBox').classList.add('hidden');}
 function goConfirm(){
   hideErr();
-  const type=document.getElementById('type').value;
+  const type=(document.querySelector('input[name="type"]:checked')||{}).value||'';
   if(!type){showErr('구분을 선택해 주세요.');return;}
   let params={type};
   if(type==='교구'){
@@ -276,14 +282,14 @@ async function doSubmit(){
 function prefillLookup(){
   if(!lastParams)return;
   const type=lastParams.type;
-  document.getElementById('l_type').value=type;onLookupTypeChange();
+  const _lt=document.querySelector('input[name="l_type"][value="'+type+'"]');if(_lt){_lt.checked=true;}onLookupTypeChange();
   if(type==='교구'){if(lastParams.district){const _el=document.querySelector('input[name="l_district"][value="'+lastParams.district+'"]');if(_el)_el.checked=true;}document.getElementById('l_cell').value=lastParams.cell||'';document.getElementById('l_name_k').value=lastParams.name||'';}
   else{if(lastParams.department){const _el2=document.querySelector('input[name="l_department"][value="'+lastParams.department+'"]');if(_el2)_el2.checked=true;}document.getElementById('l_grade').value=lastParams.grade||'';document.getElementById('l_name_s').value=lastParams.name||'';}
 }
 async function doLookup(){
   const errBox=document.getElementById('l_errBox');
   errBox.classList.add('hidden');document.getElementById('l_resultBox').innerHTML='';document.getElementById('backToRegisterBtn').classList.add('hidden');
-  const type=document.getElementById('l_type').value;
+  const type=(document.querySelector('input[name="l_type"]:checked')||{}).value||'';
   if(!type){errBox.textContent='구분을 선택해 주세요.';errBox.classList.remove('hidden');return;}
   let qp={action:'lookup',type};
   if(type==='교구'){const _ld=document.querySelector('input[name="l_district"]:checked');qp.group=_ld?_ld.value:'';qp.sub=document.getElementById('l_cell').value.trim();qp.name=document.getElementById('l_name_k').value.trim();}
