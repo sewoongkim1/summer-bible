@@ -60,6 +60,11 @@ select:focus,input:focus{outline:none;border-color:#3367d6;background:#fff}
 .radio-btn-wrap label{display:inline-block;padding:8px 14px;border:1.5px solid #ddd;border-radius:8px;font-size:13px;font-weight:600;color:#555;background:#fafafa;cursor:pointer;transition:all .2s;margin:0}
 .radio-btn-wrap input[type=radio]:checked+label{border-color:#3367d6;color:#3367d6;background:#f0f4ff}
 .radio-btn-wrap label:hover{border-color:#3367d6;color:#3367d6}
+.closed-wrap{text-align:center;padding:12px 0}
+.closed-icon{font-size:52px;margin-bottom:16px}
+.closed-title{font-size:18px;font-weight:700;color:#333;margin-bottom:10px}
+.closed-desc{font-size:14px;color:#666;line-height:1.7;margin-bottom:24px}
+.closed-period{display:inline-block;background:#f0f4ff;color:#3367d6;border:1.5px solid #c3d4f7;border-radius:8px;padding:8px 20px;font-size:13px;font-weight:700;margin-bottom:24px}
 </style>
 </head>
 <body>
@@ -173,6 +178,20 @@ select:focus,input:focus{outline:none;border-color:#3367d6;background:#fff}
 </div></div>
 <script>
 const API='https://script.google.com/macros/s/AKfycbwPXvTQijKGzN0BkOW79Mr2V96g3jX4n3nojcJbBgbYmUudslXDlUx1c-wa81MKE2zA6w/exec';
+const REG_START=new Date('2026-07-01T00:00:00');
+const REG_END=new Date('2026-08-31T23:59:59');
+function isRegPeriod(){const now=new Date();return now>=REG_START&&now<=REG_END;}
+function showClosedScreen(){
+  const card=document.querySelector('.card');
+  card.innerHTML='<h1>썸머 써 바이블 완서자 등록</h1><p class="subtitle">2026 고척교회 썸머 써 바이블</p>'
+    +'<div class="closed-wrap">'
+    +'<div class="closed-icon">📅</div>'
+    +'<div class="closed-title">등록 기간이 아닙니다</div>'
+    +'<div class="closed-desc">완서자 등록은 아래 기간에만 가능합니다.</div>'
+    +'<div class="closed-period">2026년 7월 1일 ~ 2026년 8월 31일</div>'
+    +'<button class="btn" style="max-width:200px;margin:0 auto" onclick="window.close()">창 닫기</button>'
+    +'</div>';
+}
 let lastParams=null;
 function clearRegisterForm(){
   document.getElementById('type').value='';
@@ -196,7 +215,8 @@ function switchMode(mode){
   document.getElementById('tab-register').classList.toggle('active',mode==='register');
   document.getElementById('tab-lookup').classList.toggle('active',mode==='lookup');
   if(mode==='register'){
-    clearRegisterForm();
+    if(!isRegPeriod()){showClosedScreen();return;}
+clearRegisterForm();
     document.getElementById('registerForm').classList.remove('hidden');
   } else {
     document.getElementById('lookupForm').classList.remove('hidden');
@@ -287,5 +307,6 @@ async function doLookup(){
   }catch(e){errBox.textContent='네트워크 오류가 발생했습니다.';errBox.classList.remove('hidden');}
   finally{btn.innerHTML='조회하기';btn.disabled=false;}
 }
+if(!isRegPeriod()){showClosedScreen();}
 </script>
 </body></html>
