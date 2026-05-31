@@ -272,7 +272,7 @@ async function doSubmit(){
     const res=await fetch(API,{method:'POST',body:form});
     const data=await res.json();
     let html='';
-    if(data.ok){html=data.isDup?'<div class="result-dup"><div class="result-title">⚠️ 중복 등록 처리됨</div><div class="result-info">'+data.message+'</div></div>':'<div class="result-ok"><div class="result-title">✅ 등록 완료!</div><div class="result-info">'+data.message+'</div></div>';}
+    if(data.ok){html=data.isDup?'<div class="result-dup"><div class="result-title">⚠️ 등록 내역이 있음</div><div class="result-info">이미 등록된 내역이 있습니다.</div></div>':'<div class="result-ok"><div class="result-title">✅ 등록 완료!</div><div class="result-info">'+data.message+'</div></div>';}
     else{html='<div class="result-notfound"><div class="result-title">❌ 등록 실패</div><div class="result-info">'+(data.message||'오류가 발생했습니다.')+'</div></div>';}
     document.getElementById('doneResult').innerHTML=html;
     showScreen('doneForm');window.scrollTo(0,0);
