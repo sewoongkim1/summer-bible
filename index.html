@@ -4,34 +4,57 @@
 <meta charset="UTF-8">
 <meta name="color-scheme" content="light">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>썸머 써 바이블</title>
+<title>고척교회 썸머 써 바이블</title>
 <meta property="og:image" content="https://sewoongkim1.github.io/summer-bible/og-image.png">
 <link rel="icon" type="image/png" href="https://sewoongkim1.github.io/summer-bible/og-image.png">
 <link rel="apple-touch-icon" href="https://sewoongkim1.github.io/summer-bible/og-image.png">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Apple SD Gothic Neo","Noto Sans KR",Arial,sans-serif;background:#f5f6fa;color:#333;min-height:100vh;display:flex;align-items:center;justify-content:center}
-.container{max-width:480px;width:100%;padding:24px 16px}
-.card{background:#fff;border-radius:14px;box-shadow:0 2px 10px rgba(0,0,0,.06);padding:40px 32px;text-align:center}
-h1{font-size:22px;font-weight:700;color:#222;margin-bottom:8px}
-.subtitle{font-size:14px;color:#666;margin-bottom:36px}
-.btn-wrap{display:flex;flex-direction:column;gap:16px}
-.btn{display:block;width:100%;padding:16px;border:none;border-radius:10px;font-size:16px;font-weight:700;cursor:pointer;text-decoration:none;transition:background .2s;color:#fff}
-.btn-primary{background:#3367d6}
-.btn-primary:hover{background:#2850a0}
-.btn-secondary{background:#5c7cfa}
-.btn-secondary:hover{background:#4263d6}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Apple SD Gothic Neo","Noto Sans KR",Arial,sans-serif;background:#f0f4f8;color:#333;min-height:100vh;display:flex;align-items:flex-start;justify-content:center;padding:0 0 40px}
+.page{max-width:420px;width:100%}
+.logo-wrap{background:#1a5276;padding:18px 24px;display:flex;align-items:center;justify-content:center;gap:14px}
+.logo-wrap img{height:52px;width:auto}
+.logo-text{color:#fff;font-size:28px;font-weight:800;letter-spacing:1px}
+.body{padding:28px 20px;display:flex;flex-direction:column;gap:20px}
+.card{background:#fff;border:2.5px solid #27ae60;border-radius:14px;overflow:hidden;text-decoration:none;display:block;transition:transform .15s,box-shadow .15s;box-shadow:0 2px 8px rgba(0,0,0,.07)}
+.card:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,.12)}
+.card-header{background:#1a5276;padding:16px 20px}
+.card-title{color:#fff;font-size:20px;font-weight:800;line-height:1.35;word-break:keep-all}
+.card-body{padding:14px 20px 18px}
+.card-meta{font-size:13.5px;color:#555;line-height:1.9}
+.card-meta span{display:block}
+.card-meta .label{color:#888;margin-right:2px}
 </style>
 </head>
 <body>
-<div class="container">
-  <div class="card">
-    <h1>썸머 써 바이블</h1>
-    <p class="subtitle">2026 고척교회 썸머 써 바이블</p>
-    <div class="btn-wrap">
-      <a class="btn btn-primary" href="https://sewoongkim1.github.io/summer-bible/registration.html">완서자 등록하기</a>
-      <a class="btn btn-secondary" href="https://sewoongkim1.github.io/bible-registration/">바이블 등록하기</a>
-    </div>
+<div class="page">
+  <div class="logo-wrap">
+    <img src="https://sewoongkim1.github.io/summer-bible/og-image.png" alt="고척교회 로고">
+    <span class="logo-text">고척교회</span>
+  </div>
+  <div class="body">
+    <a class="card" href="https://sewoongkim1.github.io/summer-bible/registration.html">
+      <div class="card-header">
+        <div class="card-title">썸머 써 바이블<br>완서자 등록하기</div>
+      </div>
+      <div class="card-body">
+        <div class="card-meta">
+          <span><span class="label">기간:</span>2026-05-01 ~ 2026-08-31</span>
+          <span><span class="label">대상:</span>전체</span>
+        </div>
+      </div>
+    </a>
+    <a class="card" href="https://sewoongkim1.github.io/bible-registration/">
+      <div class="card-header">
+        <div class="card-title">성경필사 신청하기</div>
+      </div>
+      <div class="card-body">
+        <div class="card-meta">
+          <span><span class="label">기간:</span>2026-05-01 ~ 2026-08-31</span>
+          <span><span class="label">대상:</span>전체</span>
+        </div>
+      </div>
+    </a>
   </div>
 </div>
 </body>
