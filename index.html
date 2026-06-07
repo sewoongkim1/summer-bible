@@ -97,7 +97,7 @@ line-height: 1.6;
 <h2 class="card-title">썸머 써 바이블 완서자 등록하기</h2>
 <div class="card-meta">
 <div class="meta-row"><span class="meta-label">기간</span><span>2026-06-01 ~ 2026-08-31</span></div>
-<div class="meta-row"><span class="meta-label">대상</span><span>필사 완서 및 퀴즈를 푸신 고척교인 </span></div>
+<div class="meta-row"><span class="meta-label">대상</span><span>필사 완서 및 퀴즈를 푸신 고척교회 성도</span></div>
 </div>
 </div>
 <div class="card-divider"></div>
@@ -134,7 +134,7 @@ function goIfOpen(startStr, endStr, url, msgId) {
     location.href = url;
   } else {
     var fmt = function(d) { return d.getFullYear() + '년 ' + (d.getMonth()+1) + '월 ' + d.getDate() + '일'; };
-    msgEl.textContent = '📅 등록 기간이 아닙니다.  신청 기간: ' + fmt(start) + ' ~ ' + fmt(end);
+    msgEl.textContent = '📅 등록/신청 기간이 아닙니다.  기간: ' + fmt(start) + ' ~ ' + fmt(end);
     msgEl.style.display = 'block';
   }
 }
