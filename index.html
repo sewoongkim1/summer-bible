@@ -135,7 +135,7 @@ function goIfOpen(startStr, endStr, url, msgId) {
     location.href = url;
   } else {
     var fmt = function(d) { return d.getFullYear() + '년 ' + (d.getMonth()+1) + '월 ' + d.getDate() + '일'; };
-    msgEl.textContent = '📅 등록/신청 기간이 아닙니다. \n 기간: ' + fmt(start) + ' ~ ' + fmt(end);
+    msgEl.innerHTML = '📅 등록/신청 기간이 아닙니다. <br> 기간: ' + fmt(start) + ' ~ ' + fmt(end);
     msgEl.style.display = 'block';
   }
 }
