@@ -3,18 +3,18 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>고척교회 제자양육부 신앙운동팀</title>
+<title>고첩교회 제자양육부 신앙운동팀</title>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="오직 성경, 말씀이 답이다!">
 <meta property="og:title" content="오직 성경, 말씀이 답이다!">
-<meta property="og:description" content="고척교회 제자양육부 신앙운동팀">
+<meta property="og:description" content="고첩교회 제자양육부 신앙운동팀">
 <meta property="og:image" content="https://sewoongkim1.github.io/summer-bible/og-image.png">
 <meta property="og:image:width" content="1254">
 <meta property="og:image:height" content="627">
 <meta property="og:url" content="https://sewoongkim1.github.io/summer-bible/">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="고척교회">
-<meta name="twitter:description" content="고척교회 제자양육부 신앙운동팀">
+<meta name="twitter:title" content="고첩교회">
+<meta name="twitter:description" content="고첩교회 제자양육부 신앙운동팀">
 <meta name="twitter:image" content="https://sewoongkim1.github.io/summer-bible/og-image.png">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet" />
 <style>
@@ -47,8 +47,7 @@ box-shadow: 0 4px 24px rgba(0,0,0,0.18);
 .logo-tagline .tagline-sub { font-size: 12px; font-weight: 500; color: #1a5276; letter-spacing: 0.5px; }
 .hero-subtitle { font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.65); letter-spacing: 3px; margin-bottom: 0; }
 .cards { display: flex; flex-direction: column; gap: 20px; width: 100%; max-width: 420px; }
-.card { background: rgba(255,255,255,0.06); backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,0.15); border-radius: 24px; overflow: hidden; transition: transform 0.25s ease, box-shadow 0.25s ease; cursor: pointer; }
-.card:hover { transform: translateY(-4px); box-shadow: 0 20px 50px rgba(0,0,0,0.35); }
+.card { background: rgba(255,255,255,0.06); backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,0.15); border-radius: 24px; overflow: hidden; transition: transform 0.25s ease, box-shadow 0.25s ease; }
 .card-inner { padding: 28px 28px 24px; }
 .card-icon { width: 48px; height: 48px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 24px; margin-bottom: 16px; }
 .card-1 .card-icon { background: linear-gradient(135deg, #f59e0b, #f97316); }
@@ -64,19 +63,32 @@ box-shadow: 0 4px 24px rgba(0,0,0,0.18);
 .btn-1 { background: linear-gradient(135deg, #f59e0b, #f97316); color: #fff; box-shadow: 0 4px 20px rgba(245,158,11,0.35); }
 .btn-2 { background: linear-gradient(135deg, #10b981, #059669); color: #fff; box-shadow: 0 4px 20px rgba(16,185,129,0.35); }
 .footer { margin-top: 48px; font-size: 12px; color: rgba(255,255,255,0.3); letter-spacing: 1px; }
+.period-msg {
+display: none;
+margin-top: 10px;
+padding: 10px 14px;
+background: rgba(192,57,43,0.18);
+border: 1.5px solid rgba(220,80,60,0.5);
+border-radius: 10px;
+color: #ff8a80;
+font-size: 13px;
+font-weight: 600;
+text-align: center;
+line-height: 1.6;
+}
 </style>
 </head>
 <body>
 <div class="hero">
 <div class="logo-wrap">
-<img src="logo3.png" alt="고척교회 로고" />
+<img src="logo3.png" alt="고첩교회 로고" />
 <div class="logo-tagline">
 <span class="tagline-main">오직 성경, 말씀이 답이다!</span>
 <span class="tagline-sub">주의 말씀은 내 발에 등이요, 내 길에 빛이니이다.</span>
 <span class="tagline-sub">시편 119편 105절</span>
 </div>
 </div>
-<p class="hero-subtitle">고척교회 제자양육부 신앙운동팀</p>
+<p class="hero-subtitle">고첩교회 제자양육부 신앙운동팀</p>
 </div>
 <div class="cards">
 <div class="card card-1">
@@ -85,12 +97,13 @@ box-shadow: 0 4px 24px rgba(0,0,0,0.18);
 <h2 class="card-title">썸머 써 바이블 완서자 등록하기</h2>
 <div class="card-meta">
 <div class="meta-row"><span class="meta-label">기간</span><span>2026-06-01 ~ 2026-08-31</span></div>
-<div class="meta-row"><span class="meta-label">대상</span><span>필사 완서 및 퀴즈를 푸신 고척교인 </span></div>
+<div class="meta-row"><span class="meta-label">대상</span><span>필사 완서 및 퀴즈를 푸신 고첩교인 </span></div>
 </div>
 </div>
 <div class="card-divider"></div>
 <div class="card-footer">
-<a href="https://sewoongkim1.github.io/summer-bible/registration.html" class="btn btn-1">등록하기 →</a>
+<button class="btn btn-1" onclick="goIfOpen('2026-06-01','2026-08-31','https://sewoongkim1.github.io/summer-bible/registration.html','msg1')">등록하기 →</button>
+<div class="period-msg" id="msg1"></div>
 </div>
 </div>
 <div class="card card-2">
@@ -99,15 +112,32 @@ box-shadow: 0 4px 24px rgba(0,0,0,0.18);
 <h2 class="card-title">성경필사 신청하기</h2>
 <div class="card-meta">
 <div class="meta-row"><span class="meta-label">기간</span><span>2026-09-01 ~ 2026-10-31</span></div>
-<div class="meta-row"><span class="meta-label">대상</span><span>고척교회 성도</span></div>
+<div class="meta-row"><span class="meta-label">대상</span><span>고첩교회 성도</span></div>
 </div>
 </div>
 <div class="card-divider"></div>
 <div class="card-footer">
-<a href="https://sewoongkim1.github.io/bible-registration/" class="btn btn-2">신청하기 →</a>
+<button class="btn btn-2" onclick="goIfOpen('2026-09-01','2026-10-31','https://sewoongkim1.github.io/bible-registration/','msg2')">신청하기 →</button>
+<div class="period-msg" id="msg2"></div>
 </div>
 </div>
 </div>
-<p class="footer">© 2026 고척교회</p>
+<p class="footer">© 2026 고첩교회</p>
+<script>
+function goIfOpen(startStr, endStr, url, msgId) {
+  var now = new Date();
+  var start = new Date(startStr + 'T00:00:00');
+  var end   = new Date(endStr   + 'T23:59:59');
+  var msgEl = document.getElementById(msgId);
+  if (now >= start && now <= end) {
+    msgEl.style.display = 'none';
+    location.href = url;
+  } else {
+    var fmt = function(d) { return d.getFullYear() + '년 ' + (d.getMonth()+1) + '월 ' + d.getDate() + '일'; };
+    msgEl.textContent = '📅 등록 기간이 아닙니다.  신청 기간: ' + fmt(start) + ' ~ ' + fmt(end);
+    msgEl.style.display = 'block';
+  }
+}
+</script>
 </body>
 </html>
