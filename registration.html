@@ -24,14 +24,14 @@
 <style>
 :root{--navy:#1a3a6b;--gold:#c8a84b;--cream:#fdf8f0;--white:#ffffff;--gray:#6b7280;--light:#f3f0ea;--border:#ddd6c8;--error:#c0392b;}
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Noto Sans KR',-apple-system,BlinkMacSystemFont,sans-serif;min-height:100vh;background:var(--cream);color:#222;padding:0 0 60px;}
-.page-header{background:var(--navy);padding:20px 20px 16px;text-align:center;margin-bottom:0;}
-.logo-wrap{background:transparent;border:none;box-shadow:none;padding:0;margin-bottom:8px;display:flex;align-items:center;justify-content:center;gap:14px;width:100%;max-width:480px;margin-left:auto;margin-right:auto;}
-.logo-wrap img{width:44px;height:auto;display:block;flex-shrink:0;}
+body{font-family:'Noto Sans KR',-apple-system,BlinkMacSystemFont,sans-serif;min-height:100vh;background:linear-gradient(135deg,#0d1b3e 0%,#1a3a6b 40%,#0d4a7a 100%);color:#222;padding:0 0 60px;}
+.hero{display:flex;flex-direction:column;align-items:center;background:linear-gradient(135deg,#0d1b3e 0%,#1a3a6b 40%,#0d4a7a 100%);padding:16px 20px 14px;margin-bottom:0;width:100%;}
+.logo-wrap{background:rgba(255,255,255,0.92);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.6);border-radius:20px;padding:16px 28px;margin-bottom:10px;display:flex;align-items:center;gap:18px;box-shadow:0 4px 24px rgba(0,0,0,0.18);width:100%;max-width:480px;}
+.logo-wrap img{width:50px;height:auto;display:block;flex-shrink:0;}
 .logo-tagline{display:flex;flex-direction:column;gap:2px;}
-.logo-tagline .tagline-main{font-size:15px;font-weight:800;color:var(--white);letter-spacing:-0.3px;line-height:1.3;}
-.logo-tagline .tagline-sub{font-size:11px;font-weight:400;color:rgba(255,255,255,0.65);letter-spacing:0.3px;}
-.page-subtitle{font-size:11px;font-weight:500;color:var(--gold);letter-spacing:3px;margin-top:2px;}
+.logo-tagline .tagline-main{font-size:16px;font-weight:800;color:#0d1b3e;letter-spacing:-0.3px;line-height:1.3;}
+.logo-tagline .tagline-sub{font-size:12px;font-weight:500;color:#1a5276;letter-spacing:0.5px;}
+.hero-subtitle{font-size:13px;font-weight:500;color:rgba(255,255,255,0.65);letter-spacing:3px;margin-bottom:0;}
 .container{max-width:480px;margin:0 auto;padding:20px 16px;}
 .card{background:var(--white);border-radius:12px;padding:22px 20px;margin-bottom:16px;box-shadow:0 2px 12px rgba(26,58,107,0.08);border:1px solid var(--border);}
 h1{font-size:18px;font-weight:700;color:var(--navy);margin-bottom:4px;text-align:center;}
@@ -87,12 +87,328 @@ input::placeholder{color:var(--gray);}
 <img src="logo3.png" alt="고척교회 로고" />
 <div class="logo-tagline">
 <span class="tagline-main">오직 성경, 말씀이 답이다!</span>
-<span class="tagline-sub">주의 말씀은 내 발에 등이요</span> 
+<span class="tagline-sub">주의 말씀은 내 발에 등이요</span>
 <span class="tagline-sub">내 길에 빛이니이다.</span>
 <span class="tagline-sub">시편 119편 105절</span>
 </div>
 </div>
-<p class="hero-subtitle">제자양육부 신앙운동팀</p>
+<p class="hero-subtitle">제자양육부 &nbsp; 신앙운동팀</p>
+</div>
+<div class="container"><div class="card">
+<h1>2026 썸머 써 바이블 완서자 등록</h1>
+<p class="subtitle">매일 말씀을 필사하며 은혜를 누리는 여름</p>
+<div class="tab-wrap">
+<button class="tab active" id="tab-register" onclick="switchMode('register')">등록하기</button>
+<button class="tab" id="tab-lookup" onclick="switchMode('lookup')">조회하기</button>
+</div>
+<div id="registerForm">
+<div class="section-title">등록 정보 입력</div>
+<label>구분</label>
+<div class="radio-btn-wrap">
+<input type="radio" name="type" id="t_1" value="교구" onchange="onTypeChange()"><label for="t_1">교구</label>
+<input type="radio" name="type" id="t_2" value="교회학교" onchange="onTypeChange()"><label for="t_2">교회학교</label>
+</div>
+<div id="kyogu-fields" class="hidden">
+<label>교구</label>
+<div class="radio-btn-wrap">
+<input type="radio" name="district" id="d_1" value="믿음"><label for="d_1">믿음</label>
+<input type="radio" name="district" id="d_2" value="소망"><label for="d_2">소망</label>
+<input type="radio" name="district" id="d_3" value="사랑"><label for="d_3">사랑</label>
+<input type="radio" name="district" id="d_4" value="섬김"><label for="d_4">섬김</label>
+<input type="radio" name="district" id="d_5" value="은혜"><label for="d_5">은혜</label>
+<input type="radio" name="district" id="d_6" value="화평"><label for="d_6">화평</label>
+<input type="radio" name="district" id="d_7" value="기쁨"><label for="d_7">기쁨</label>
+<input type="radio" name="district" id="d_8" value="새가족"><label for="d_8">새가족</label>
+</div>
+<label>목장</label><input type="text" id="cell" placeholder="예: 1 또는 3">
+<label>직분 <span style="font-weight:400;color:rgba(255,255,255,0.35);font-size:12px">(선택사항)</span></label>
+<div class="radio-btn-wrap">
+<input type="radio" name="position" id="p_1" value="성도님"><label for="p_1">성도님</label>
+<input type="radio" name="position" id="p_2" value="집사님"><label for="p_2">집사님</label>
+<input type="radio" name="position" id="p_3" value="안수집사님"><label for="p_3">안수집사님</label>
+<input type="radio" name="position" id="p_4" value="권사님"><label for="p_4">권사님</label>
+<input type="radio" name="position" id="p_5" value="장로님"><label for="p_5">장로님</label>
+<input type="radio" name="position" id="p_6" value="목사님"><label for="p_6">목사님</label>
+<input type="radio" name="position" id="p_7" value="사모님"><label for="p_7">사모님</label>
+</div>
+<label>성명</label><input type="text" id="name_k" placeholder="성명을 입력하세요">
+</div>
+<div id="school-fields" class="hidden">
+<label>부서</label>
+<div class="radio-btn-wrap">
+<input type="radio" name="department" id="dep_1" value="사랑부"><label for="dep_1">사랑부</label>
+<input type="radio" name="department" id="dep_2" value="영아부"><label for="dep_2">영아부</label>
+<input type="radio" name="department" id="dep_3" value="유아부"><label for="dep_3">유아부</label>
+<input type="radio" name="department" id="dep_4" value="유치부"><label for="dep_4">유치부</label>
+<input type="radio" name="department" id="dep_5" value="유년부"><label for="dep_5">유년부</label>
+<input type="radio" name="department" id="dep_6" value="초등부"><label for="dep_6">초등부</label>
+<input type="radio" name="department" id="dep_7" value="중등부"><label for="dep_7">중등부</label>
+<input type="radio" name="department" id="dep_8" value="고등부"><label for="dep_8">고등부</label>
+<input type="radio" name="department" id="dep_9" value="청년부"><label for="dep_9">청년부</label>
+</div>
+<label>학년</label><input type="text" id="grade" placeholder="예: 1 또는 3학년">
+<label>성명</label><input type="text" id="name_s" placeholder="성명을 입력하세요">
+</div>
+<div id="errBox" class="hidden"></div>
+<button class="btn" onclick="goConfirm()">다음 →</button>
+</div>
+<div id="confirmForm" class="hidden">
+<div class="confirm-box"><div class="confirm-title">📋 등록 정보</div><div id="confirmRows"></div></div>
+<p class="confirm-question">위 정보로 등록하시겠습니까?</p>
+<button class="btn" id="doSubmitBtn" onclick="doSubmit()">✅ 등록하기</button>
+<button class="btn outline" onclick="backToRegister()">← 다시 입력</button>
+</div>
+<div id="doneForm" class="hidden">
+<div id="doneResult"></div>
+<button class="btn hidden" onclick="clearAndGoRegister()">➕ 새로 등록하기</button>
+<button class="btn secondary hidden" onclick="switchMode('lookup');prefillLookup()">🔍 내 등록 조회하기</button>
+</div>
+<div id="lookupForm" class="hidden">
+<div class="section-title">등록 내역 조회</div>
+<label>구분</label>
+<div class="radio-btn-wrap">
+<input type="radio" name="l_type" id="lt_1" value="교구" onchange="onLookupTypeChange()"><label for="lt_1">교구</label>
+<input type="radio" name="l_type" id="lt_2" value="교회학교" onchange="onLookupTypeChange()"><label for="lt_2">교회학교</label>
+</div>
+<div id="l_kyogu" class="hidden">
+<label>교구</label>
+<div class="radio-btn-wrap">
+<input type="radio" name="l_district" id="ld_1" value="믿음"><label for="ld_1">믿음</label>
+<input type="radio" name="l_district" id="ld_2" value="소망"><label for="ld_2">소망</label>
+<input type="radio" name="l_district" id="ld_3" value="사랑"><label for="ld_3">사랑</label>
+<input type="radio" name="l_district" id="ld_4" value="섬김"><label for="ld_4">섬김</label>
+<input type="radio" name="l_district" id="ld_5" value="은혜"><label for="ld_5">은혜</label>
+<input type="radio" name="l_district" id="ld_6" value="화평"><label for="ld_6">화평</label>
+<input type="radio" name="l_district" id="ld_7" value="기쁨"><label for="ld_7">기쁨</label>
+<input type="radio" name="l_district" id="ld_8" value="새가족"><label for="ld_8">새가족</label>
+</div>
+<label>목장(숫자)</label><input type="text" id="l_cell" placeholder="예: 1 또는 3">
+<label>성명</label><input type="text" id="l_name_k" placeholder="성명을 입력하세요">
+</div>
+<div id="l_school" class="hidden">
+<label>부서</label>
+<div class="radio-btn-wrap">
+<input type="radio" name="l_department" id="ls_1" value="사랑부"><label for="ls_1">사랑부</label>
+<input type="radio" name="l_department" id="ls_2" value="영아부"><label for="ls_2">영아부</label>
+<input type="radio" name="l_department" id="ls_3" value="유아부"><label for="ls_3">유아부</label>
+<input type="radio" name="l_department" id="ls_4" value="유치부"><label for="ls_4">유치부</label>
+<input type="radio" name="l_department" id="ls_5" value="유년부"><label for="ls_5">유년부</label>
+<input type="radio" name="l_department" id="ls_6" value="초등부"><label for="ls_6">초등부</label>
+<input type="radio" name="l_department" id="ls_7" value="중등부"><label for="ls_7">중등부</label>
+<input type="radio" name="l_department" id="ls_8" value="고등부"><label for="ls_8">고등부</label>
+<input type="radio" name="l_department" id="ls_9" value="청년부"><label for="ls_9">청년부</label>
+</div>
+<label>학년</label><input type="text" id="l_grade" placeholder="예: 1 또는 3학년">
+<label>성명</label><input type="text" id="l_name_s" placeholder="성명을 입력하세요">
+</div>
+<div id="l_errBox" class="hidden"></div>
+<button class="btn" id="lookupBtn" onclick="doLookup()">조회하기</button>
+<div id="l_resultBox"></div>
+<button class="btn outline hidden" id="backToRegisterBtn" onclick="clearAndGoRegister()">← 등록 화면으로</button>
+</div>
+</div></div>
+<script>
+const API='https://script.google.com/macros/s/AKfycbwPXvTQijKGzN0BkOW79Mr2V96g3jX4n3nojcJbBgbYmUudslXDlUx1c-wa81MKE2zA6w/exec';
+const REG_START=new Date('2026-05-01T00:00:00');
+const REG_END=new Date('2026-08-31T23:59:59');
+function isRegPeriod(){const now=new Date();return now>=REG_START&&now<=REG_END;}
+function showClosedScreen(){
+const card=document.querySelector('.card');
+card.innerHTML='<h1>썸머 써 바이블 완서자 등록</h1><p class="subtitle">2026 고척교회 썸머 써 바이블</p>'
++'<div class="closed-wrap">'
++'<div class="closed-icon">📅</div>'
++'<div class="closed-title">등록 기간이 아닙니다</div>'
++'<div class="closed-desc">완서자 등록은 아래 기간에만 가능합니다.</div>'
++'<div class="closed-period">2026년 7월 1일 ~ 2026년 8월 31일</div>'
++'<button class="btn" style="max-width:200px;margin:0 auto" onclick="window.close()">창 닫기</button>'
++'</div>';
+}
+let lastParams=null;
+function clearRegisterForm(){
+document.querySelectorAll('input[name="type"]').forEach(r=>r.checked=false);
+document.getElementById('kyogu-fields').classList.add('hidden');
+document.getElementById('school-fields').classList.add('hidden');
+['cell','name_k','grade','name_s'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+document.querySelectorAll('input[name="district"]').forEach(r=>r.checked=false);
+document.querySelectorAll('input[name="position"]').forEach(r=>r.checked=false);
+document.querySelectorAll('input[name="department"]').forEach(r=>r.checked=false);
+hideErr();
+}
+function clearAndGoRegister(){
+clearRegisterForm();
+['registerForm','confirmForm','doneForm','lookupForm'].forEach(id=>document.getElementById(id).classList.add('hidden'));
+document.getElementById('registerForm').classList.remove('hidden');
+document.getElementById('tab-register').classList.add('active');
+document.getElementById('tab-lookup').classList.remove('active');
+window.scrollTo(0,0);
+}
+function switchMode(mode){
+['registerForm','confirmForm','doneForm','lookupForm'].forEach(id=>document.getElementById(id).classList.add('hidden'));
+document.getElementById('tab-register').classList.toggle('active',mode==='register');
+document.getElementById('tab-lookup').classList.toggle('active',mode==='lookup');
+if(mode==='register'){
+if(!isRegPeriod()){showClosedScreen();return;}
+clearRegisterForm();
+document.getElementById('registerForm').classList.remove('hidden');
+}else{
+document.getElementById('lookupForm').classList.remove('hidden');
+}
+}
+function showScreen(id){['registerForm','confirmForm','doneForm'].forEach(i=>document.getElementById(i).classList.add('hidden'));document.getElementById(id).classList.remove('hidden');document.querySelector('.tab-wrap').classList.toggle('hidden', id==='doneForm'||id==='confirmForm');}
+function onTypeChange(){const v=(document.querySelector('input[name="type"]:checked')||{}).value||'';document.getElementById('kyogu-fields').classList.toggle('hidden',v!=='교구');document.getElementById('school-fields').classList.toggle('hidden',v!=='교회학교');}
+function onLookupTypeChange(){const v=(document.querySelector('input[name="l_type"]:checked')||{}).value||'';document.getElementById('l_kyogu').classList.toggle('hidden',v!=='교구');document.getElementById('l_school').classList.toggle('hidden',v!=='교회학교');}
+function showErr(msg){const b=document.getElementById('errBox');b.textContent=msg;b.classList.remove('hidden');}
+function hideErr(){document.getElementById('errBox').classList.add('hidden');}
+function goConfirm(){
+hideErr();
+const type=(document.querySelector('input[name="type"]:checked')||{}).value||'';
+if(!type){showErr('구분을 선택해 주세요.');return;}
+let params={type};
+if(type==='교구'){
+const _d=document.querySelector('input[name="district"]:checked');params.district=_d?_d.value:'';
+params.cell=document.getElementById('cell').value.trim();
+const _p=document.querySelector('input[name="position"]:checked');params.position=_p?_p.value:'';
+params.name=document.getElementById('name_k').value.trim();
+if(!params.district){showErr('교구를 선택해 주세요.');return;}
+if(!params.cell){showErr('목장을 입력해 주세요.');return;}
+if(!params.name){showErr('성명을 입력해 주세요.');return;}
+}else{
+const _dep=document.querySelector('input[name="department"]:checked');params.department=_dep?_dep.value:'';
+params.grade=document.getElementById('grade').value.trim();
+params.name=document.getElementById('name_s').value.trim();
+if(!params.department){showErr('부서를 선택해 주세요.');return;}
+if(!params.grade){showErr('학년을 입력해 주세요.');return;}
+if(!params.name){showErr('성명을 입력해 주세요.');return;}
+}
+lastParams=params;
+const rows=[];
+rows.push(['구분',params.type]);
+if(type==='교구'){rows.push(['교구',params.district]);rows.push(['목장',params.cell+'목장']);if(params.position)rows.push(['직분',params.position]);rows.push(['성명',params.name]);}
+else{rows.push(['부서',params.department]);rows.push(['학년',params.grade]);rows.push(['성명',params.name]);}
+document.getElementById('confirmRows').innerHTML=rows.map(([k,v])=>'<div class="confirm-row"><span class="confirm-key">'+k+'</span><span class="confirm-val">'+v+'</span></div>').join('');
+showScreen('confirmForm');window.scrollTo(0,0);
+}
+function backToRegister(){showScreen('registerForm');window.scrollTo(0,0);}
+async function doSubmit(){
+const btn=document.getElementById('doSubmitBtn');
+btn.innerHTML='<span class="spinner"></span>등록 중...';btn.disabled=true;
+try{
+const form=new FormData();
+Object.entries(lastParams).forEach(([k,v])=>form.append(k,v));
+const res=await fetch(API,{method:'POST',body:form});
+const data=await res.json();
+let html='';
+if(data.ok){html=data.isDup?'<div class="result-dup"><div class="result-title">⚠️ 등록 내역이 있음</div><div class="result-info">이미 등록된 내역이 있습니다.</div></div>':'<div class="result-ok"><div class="result-title">✅ 등록 완료!</div><div class="result-info">'+data.message+'</div></div>';}
+else{html='<div class="result-notfound"><div class="result-title">❌ 등록 실패</div><div class="result-info">'+(data.message||'오류가 발생했습니다.')+'</div></div>';}
+document.getElementById('doneResult').innerHTML=html;
+showScreen('doneForm');window.scrollTo(0,0);
+}catch(e){alert('네트워크 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.');}
+finally{btn.innerHTML='✅ 등록하기';btn.disabled=false;}
+}
+function prefillLookup(){
+if(!lastParams)return;
+const type=lastParams.type;
+const _lt=document.querySelector('input[name="l_type"][value="'+type+'"]');if(_lt){_lt.checked=true;}onLookupTypeChange();
+if(type==='교구'){if(lastParams.district){const _el=document.querySelector('input[name="l_district"][value="'+lastParams.district+'"]');if(_el)_el.checked=true;}document.getElementById('l_cell').value=lastParams.cell||'';document.getElementById('l_name_k').value=lastParams.name||'';}
+else{if(lastParams.department){const _el2=document.querySelector('input[name="l_department"][value="'+lastParams.department+'"]');if(_el2)_el2.checked=true;}document.getElementById('l_grade').value=lastParams.grade||'';document.getElementById('l_name_s').value=lastParams.name||'';}
+}
+async function doLookup(){
+const errBox=document.getElementById('l_errBox');
+errBox.classList.add('hidden');document.getElementById('l_resultBox').innerHTML='';document.getElementById('backToRegisterBtn').classList.add('hidden');
+const type=(document.querySelector('input[name="l_type"]:checked')||{}).value||'';
+if(!type){errBox.textContent='구분을 선택해 주세요.';errBox.classList.remove('hidden');return;}
+let qp={action:'lookup',type};
+if(type==='교구'){const _ld=document.querySelector('input[name="l_district"]:checked');qp.group=_ld?_ld.value:'';qp.sub=document.getElementById('l_cell').value.trim();qp.name=document.getElementById('l_name_k').value.trim();}
+else{const _ldep=document.querySelector('input[name="l_department"]:checked');qp.group=_ldep?_ldep.value:'';qp.sub=document.getElementById('l_grade').value.trim();qp.name=document.getElementById('l_name_s').value.trim();}
+const btn=document.getElementById('lookupBtn');
+btn.innerHTML='<span class="spinner"></span>조회 중...';btn.disabled=true;
+try{
+const qs=new URLSearchParams(qp).toString();
+const res=await fetch(API+'?'+qs);
+const data=await res.json();
+const box=document.getElementById('l_resultBox');
+if(!data.ok){errBox.textContent=data.message||'오류가 발생했습니다.';errBox.classList.remove('hidden');return;}
+if(!data.found){box.innerHTML='<div class="result-notfound"><div class="result-title">❌ 미등록</div><div class="result-info">입력하신 정보로 등록된 내역이 없습니다.</div></div>';}
+else{
+const r=data.rows[0];
+const icon=r.status==='중복'?'⚠️':'✅';
+const info=type==='교구'?'구분: '+r.type+' | 교구: '+r.group+' | 목장: '+r.sub+' | 성명: '+r.name:'구분: '+r.type+' | 부서: '+r.group+' | 학년: '+r.sub+' | 성명: '+r.name;
+box.innerHTML='<br><div class="result-found"><div class="result-title">'+icon+' 등록 확인 ('+data.count+'건)</div><div class="result-info">'+info+'</div>'+(r.note?'<div class="result-info" style="margin-top:4px;color:#fbbf24">비고: '+r.note+'</div>':'')+'</div>';
+}
+document.getElementById('backToRegisterBtn').classList.remove('hidden');
+}catch(e){errBox.textContent='네트워크 오류가 발생했습니다.';errBox.classList.remove('hidden');}
+finally{btn.innerHTML='조회하기';btn.disabled=false;}
+}
+if(!isRegPeriod()){showClosedScreen();}
+</script>
+</body></html>.hero{display:flex;flex-direction:column;align-items:center;margin-bottom:0;padding:12px 20px 16px;width:100%;background:linear-gradient(135deg,#0d1b3e 0%,#1a3a6b 40%,#0d4a7a 100%);}
+.logo-wrap{background:rgba(255,255,255,0.92);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.6);border-radius:20px;padding:16px 28px;margin-bottom:10px;display:flex;align-items:center;gap:18px;box-shadow:0 4px 24px rgba(0,0,0,0.18);width:100%;max-width:480px;}
+.logo-wrap img{width:50px;height:auto;display:block;flex-shrink:0;}
+.logo-tagline{display:flex;flex-direction:column;gap:2px;}
+.logo-tagline .tagline-main{font-size:16px;font-weight:800;color:#0d1b3e;letter-spacing:-0.3px;line-height:1.3;}
+.logo-tagline .tagline-sub{font-size:12px;font-weight:500;color:#1a5276;letter-spacing:0.5px;}
+.hero-subtitle{font-size:13px;font-weight:500;color:rgba(255,255,255,0.65);letter-spacing:3px;margin-bottom:0;}
+.container{max-width:480px;margin:0 auto;padding:20px 16px;}
+.card{background:var(--white);border-radius:12px;padding:22px 20px;margin-bottom:16px;box-shadow:0 2px 12px rgba(26,58,107,0.08);border:1px solid var(--border);}
+h1{font-size:18px;font-weight:700;color:var(--navy);margin-bottom:4px;text-align:center;}
+.subtitle{font-size:12px;color:var(--gray);text-align:center;margin-bottom:20px;}
+.tab-wrap{display:flex;gap:6px;margin-bottom:18px;}
+.tab{flex:1;padding:10px;border:1.5px solid var(--border);border-radius:10px;background:var(--light);font-size:14px;font-weight:600;color:var(--gray);cursor:pointer;transition:all .2s;font-family:'Noto Sans KR',sans-serif;}
+.tab.active{border-color:var(--navy);color:var(--navy);background:rgba(26,58,107,0.07);}
+label{display:block;font-size:13px;font-weight:600;color:var(--navy);margin-bottom:5px;margin-top:14px;}
+.section-title{font-size:11px;font-weight:700;color:var(--gray);letter-spacing:1.5px;margin-bottom:12px;text-transform:uppercase;}
+.hero-phrase{font-size:20px;font-weight:600;color:var(--navy);text-align:center;margin-bottom:20px;line-height:1.6;}
+select,input[type=text]{width:100%;padding:11px 13px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;color:#222;background:var(--cream);transition:border .2s;font-family:'Noto Sans KR',sans-serif;}
+select:focus,input:focus{outline:none;border-color:var(--navy);background:var(--white);}
+select option{color:#222;background:#fff;}
+input::placeholder{color:var(--gray);}
+.radio-btn-wrap{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px;}
+.radio-btn-wrap input[type=radio]{display:none;}
+.radio-btn-wrap label{display:inline-block;padding:7px 14px;border:1.5px solid var(--border);border-radius:20px;font-size:13px;font-weight:500;color:#444;background:var(--cream);cursor:pointer;transition:all .2s;margin:0;}
+.radio-btn-wrap input[type=radio]:checked+label{border-color:var(--navy);background:var(--navy);color:var(--white);font-weight:600;}
+.radio-btn-wrap label:hover{border-color:var(--navy);color:var(--navy);}
+.btn{display:block;width:100%;padding:13px;background:var(--navy);color:var(--white);border:none;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;margin-top:14px;transition:opacity .2s,transform .15s;letter-spacing:0.5px;font-family:'Noto Sans KR',sans-serif;box-shadow:0 4px 14px rgba(26,58,107,0.25);}
+.btn:hover{opacity:0.88;transform:scale(0.98);}
+.btn.secondary{background:var(--gray);box-shadow:none;}
+.btn.outline{background:transparent;color:var(--navy);border:1.5px solid var(--border);box-shadow:none;}
+.btn.outline:hover{background:var(--light);color:var(--navy);}
+.hidden{display:none!important;}
+#errBox{background:#fdedec;border:1.5px solid #f5b7b1;border-radius:8px;padding:10px 14px;margin-top:12px;color:var(--error);font-size:13px;}
+.spinner{display:inline-block;width:16px;height:16px;border:2.5px solid rgba(255,255,255,.35);border-top:2.5px solid #fff;border-radius:50%;animation:spin .8s linear infinite;vertical-align:middle;margin-right:6px;}
+@keyframes spin{to{transform:rotate(360deg)}}
+.confirm-box{background:var(--light);border:1.5px solid var(--border);border-radius:10px;padding:18px;margin-bottom:14px;}
+.confirm-title{font-size:14px;font-weight:700;color:var(--navy);margin-bottom:12px;text-align:center;}
+.confirm-row{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid var(--border);}
+.confirm-row:last-child{border-bottom:none;}
+.confirm-key{font-size:12px;font-weight:600;color:var(--gray);}
+.confirm-val{font-size:13px;color:var(--navy);font-weight:700;text-align:right;}
+.confirm-question{font-size:13px;color:var(--gray);text-align:center;margin:14px 0 4px;font-weight:500;}
+.result-ok{background:#e8f5e9;border:1.5px solid #a5d6a7;border-radius:10px;padding:16px;color:#1b5e20;margin-bottom:12px;}
+.result-dup{background:#fff8e1;border:1.5px solid #ffe082;border-radius:10px;padding:16px;color:#7a5800;margin-bottom:12px;}
+.result-found{background:#e3f2fd;border:1.5px solid #90caf9;border-radius:10px;padding:16px;color:#0a4d8c;margin-bottom:12px;}
+.result-notfound{background:var(--light);border:1.5px solid var(--border);border-radius:10px;padding:16px;color:var(--gray);margin-bottom:12px;}
+.result-title{font-weight:700;font-size:14px;margin-bottom:6px;}
+.result-info{font-size:13px;margin-top:4px;}
+.closed-wrap{text-align:center;padding:16px 0;}
+.closed-icon{font-size:48px;margin-bottom:14px;}
+.closed-title{font-size:17px;font-weight:700;color:var(--navy);margin-bottom:8px;}
+.closed-desc{font-size:13px;color:var(--gray);line-height:1.7;margin-bottom:20px;}
+.closed-period{display:inline-block;background:rgba(200,168,75,0.12);color:var(--gold);border:1.5px solid var(--gold);border-radius:8px;padding:7px 18px;font-size:13px;font-weight:700;margin-bottom:20px;}
+#l_errBox{background:#fdedec;border:1.5px solid #f5b7b1;border-radius:8px;padding:10px 14px;margin-top:12px;color:var(--error);font-size:13px;}
+</style>
+</head>
+<body>
+<div class="hero">
+<div class="logo-wrap">
+<img src="logo3.png" alt="고척교회 로고" />
+<div class="logo-tagline">
+<span class="tagline-main">오직 성경, 말씀이 답이다!</span>
+<span class="tagline-sub">주의 말씀은 내 발에 등이요</span>
+<span class="tagline-sub">내 길에 빛이니이다.</span>
+<span class="tagline-sub">시편 119편 105절</span>
+</div>
+</div>
+<p class="hero-subtitle">제자양육부 &nbsp; 신앙운동팀</p>
 </div>
 <div class="container"><div class="card">
 <h1>2026 썸머 써 바이블 완서자 등록</h1>
