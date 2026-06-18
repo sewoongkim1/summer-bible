@@ -316,7 +316,7 @@ document.getElementById('registerForm').classList.remove('hidden');
 document.getElementById('lookupForm').classList.remove('hidden');
 }
 }
-function showScreen(id){['registerForm','confirmForm','doneForm'].forEach(i=>document.getElementById(i).classList.add('hidden'));document.getElementById(id).classList.remove('hidden');}
+function showScreen(id){['registerForm','confirmForm','doneForm'].forEach(i=>document.getElementById(i).classList.add('hidden'));document.getElementById(id).classList.remove('hidden');document.querySelector('.tab-wrap').classList.toggle('hidden', id==='doneForm');}
 function onTypeChange(){const v=(document.querySelector('input[name="type"]:checked')||{}).value||'';document.getElementById('kyogu-fields').classList.toggle('hidden',v!=='교구');document.getElementById('school-fields').classList.toggle('hidden',v!=='교회학교');}
 function onLookupTypeChange(){const v=(document.querySelector('input[name="l_type"]:checked')||{}).value||'';document.getElementById('l_kyogu').classList.toggle('hidden',v!=='교구');document.getElementById('l_school').classList.toggle('hidden',v!=='교회학교');}
 function showErr(msg){const b=document.getElementById('errBox');b.textContent=msg;b.classList.remove('hidden');}
