@@ -53,6 +53,7 @@ box-shadow: 0 4px 24px rgba(0,0,0,0.18);
 .card-icon { width: 48px; height: 48px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 24px; margin-bottom: 16px; }
 .card-1 .card-icon { background: linear-gradient(135deg, #f59e0b, #f97316); }
 .card-2 .card-icon { background: linear-gradient(135deg, #10b981, #059669); }
+.card-3 .card-icon { background: linear-gradient(135deg, #8b5cf6, #6366f1); }
 .card-title { font-size: 15px; font-weight: 700; color: #ffffff; margin-bottom: 12px; line-height: 1.4; white-space: nowrap; }
 .card-meta { display: flex; flex-direction: column; gap: 5px; margin-bottom: 20px; }
 .meta-row { display: flex; align-items: center; gap: 8px; font-size: 13px; color: rgba(255,255,255,0.6); }
@@ -63,6 +64,7 @@ box-shadow: 0 4px 24px rgba(0,0,0,0.18);
 .btn:hover { opacity: 0.88; transform: scale(0.98); }
 .btn-1 { background: linear-gradient(135deg, #f59e0b, #f97316); color: #fff; box-shadow: 0 4px 20px rgba(245,158,11,0.35); }
 .btn-2 { background: linear-gradient(135deg, #10b981, #059669); color: #fff; box-shadow: 0 4px 20px rgba(16,185,129,0.35); }
+.btn-3 { background: linear-gradient(135deg, #8b5cf6, #6366f1); color: #fff; box-shadow: 0 4px 20px rgba(139,92,246,0.35); }
 .footer { margin-top: 48px; font-size: 12px; color: rgba(255,255,255,0.3); letter-spacing: 1px; }
 .period-msg {
 display: none;
@@ -106,6 +108,21 @@ line-height: 1.6;
 <div class="card-footer">
 <button class="btn btn-1" onclick="goIfOpen('2026-06-01','2026-09-06','https://sewoongkim1.github.io/summer-bible/registration.html','msg1')">등록하기 →</button>
 <div class="period-msg" id="msg1"></div>
+</div>
+</div>
+<div class="card card-3">
+<div class="card-inner">
+<div class="card-icon">🙏</div>
+<h2 class="card-title">성경말씀 암송하기</h2>
+<div class="card-meta">
+<div class="meta-row"><span class="meta-label">기간</span><span>2026-06-01 ~ 2026-12-31</span></div>
+<div class="meta-row"><span class="meta-label">대상</span><span>고척교회 성도</span></div>
+</div>
+</div>
+<div class="card-divider"></div>
+<div class="card-footer">
+<button class="btn btn-3" onclick="goIfOpen('2026-06-01','2026-12-31','https://sewoongkim1.github.io/bible-memorize-app/','msg3')">암송하기 →</button>
+<div class="period-msg" id="msg3"></div>
 </div>
 </div>
 <div class="card card-2">
