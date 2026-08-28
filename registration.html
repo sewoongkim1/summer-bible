@@ -325,10 +325,18 @@ if(type==='교구'){const _ld=document.querySelector('input[name="l_district"]:c
 else{const _ldep=document.querySelector('input[name="l_department"]:checked');qp.group=_ldep?_ldep.value:'';qp.sub=document.getElementById('l_grade').value.trim();qp.name=document.getElementById('l_name_s').value.trim();}
 const btn=document.getElementById('lookupBtn');
 btn.innerHTML='<span class="spinner"></span>조회 중...';btn.disabled=true;
+let data;
 try{
 const qs=new URLSearchParams(qp).toString();
-const res=await fetch(API+'?'+qs);
-const data=await res.json();
+data=await fetchJsonWithRetry(API+'?'+qs);
+}catch(e){
+console.error('[lookup] fetch failed',e);
+errBox.textContent='네트워크 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.';errBox.classList.remove('hidden');
+btn.innerHTML='조회하기';btn.disabled=false;
+return;
+}
+btn.innerHTML='조회하기';btn.disabled=false;
+try{
 const box=document.getElementById('l_resultBox');
 if(!data.ok){errBox.textContent=data.message||'오류가 발생했습니다.';errBox.classList.remove('hidden');return;}
 if(!data.found){box.innerHTML='<div class="result-notfound"><div class="result-title">❌ 미등록</div><div class="result-info">입력하신 정보로 등록된 내역이 없습니다.</div></div>';}
@@ -339,8 +347,20 @@ const info=type==='교구'?'구분: '+r.type+' | 교구: '+r.group+' | 목장: '
 box.innerHTML='<br><div class="result-found"><div class="result-title">'+icon+' 등록 확인 ('+data.count+'건)</div><div class="result-info">'+info+'</div>'+(r.note?'<div class="result-info" style="margin-top:4px;color:#fbbf24">비고: '+r.note+'</div>':'')+'</div>';
 }
 document.getElementById('backToRegisterBtn').classList.remove('hidden');
-}catch(e){errBox.textContent='네트워크 오류가 발생했습니다.';errBox.classList.remove('hidden');}
-finally{btn.innerHTML='조회하기';btn.disabled=false;}
+}catch(e){
+console.error('[lookup] render failed',e);
+errBox.textContent='결과 표시 중 오류가 발생했습니다.';errBox.classList.remove('hidden');
+}
+}
+async function fetchJsonWithRetry(url){
+try{
+const res=await fetch(url);
+return await res.json();
+}catch(e1){
+console.warn('[lookup] first attempt failed, retrying once',e1);
+const res2=await fetch(url);
+return await res2.json();
+}
 }
 if(!isRegPeriod()){showClosedScreen();}
 </script>
