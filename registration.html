@@ -213,7 +213,7 @@ input::placeholder{color:var(--gray);}
 <script>
 const API='https://script.google.com/macros/s/AKfycbwPXvTQijKGzN0BkOW79Mr2V96g3jX4n3nojcJbBgbYmUudslXDlUx1c-wa81MKE2zA6w/exec';
 const REG_START=new Date('2026-05-01T00:00:00');
-const REG_END=new Date('2026-08-31T23:59:59');
+const REG_END=new Date('2026-09-13T23:59:59');
 function isRegPeriod(){const now=new Date();return now>=REG_START&&now<=REG_END;}
 function showClosedScreen(){
 const card=document.querySelector('.card');
@@ -222,7 +222,7 @@ card.innerHTML='<h1>썸머 써 바이블 완서자 등록</h1><p class="subtitle
 +'<div class="closed-icon">📅</div>'
 +'<div class="closed-title">등록 기간이 아닙니다</div>'
 +'<div class="closed-desc">완서자 등록은 아래 기간에만 가능합니다.</div>'
-+'<div class="closed-period">2026년 7월 1일 ~ 2026년 8월 31일</div>'
++'<div class="closed-period">2026년 7월 1일 ~ 2026년 9월 13일</div>'
 +'<button class="btn" style="max-width:200px;margin:0 auto" onclick="window.close()">창 닫기</button>'
 +'</div>';
 }
