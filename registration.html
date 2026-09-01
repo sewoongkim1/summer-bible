@@ -108,10 +108,10 @@ input::placeholder{color:var(--gray);}
 <div class="section-title">등록 정보 입력</div>
 <label>구분</label>
 <div class="radio-btn-wrap">
-<input type="radio" name="type" id="t_1" value="교구" onchange="onTypeChange()"><label for="t_1">교구</label>
+<input type="radio" name="type" id="t_1" value="교구" checked onchange="onTypeChange()"><label for="t_1">교구</label>
 <input type="radio" name="type" id="t_2" value="교회학교" onchange="onTypeChange()"><label for="t_2">교회학교</label>
 </div>
-<div id="kyogu-fields" class="hidden">
+<div id="kyogu-fields">
 <label>교구</label>
 <div class="radio-btn-wrap">
 <input type="radio" name="district" id="d_1" value="믿음"><label for="d_1">믿음</label>
@@ -229,7 +229,8 @@ card.innerHTML='<h1>썸머 써 바이블 완서자 등록</h1><p class="subtitle
 let lastParams=null;
 function clearRegisterForm(){
 document.querySelectorAll('input[name="type"]').forEach(r=>r.checked=false);
-document.getElementById('kyogu-fields').classList.add('hidden');
+document.getElementById('t_1').checked=true;
+document.getElementById('kyogu-fields').classList.remove('hidden');
 document.getElementById('school-fields').classList.add('hidden');
 ['cell','name_k','grade','name_s'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
 document.querySelectorAll('input[name="district"]').forEach(r=>r.checked=false);
